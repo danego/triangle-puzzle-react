@@ -23,9 +23,12 @@ export default function Triangle({ odd }: TriangleProps) {
         setPieceRotation(newPieceRotation);
     };
 
+    const classesArray = [classes['grab-handle']];
+    if (odd) classesArray.push(classes['odd']);
+
     return (
         <div
-            className={odd ? `${classes['grab-handle']} ${classes['odd']}` : classes['grab-handle']}
+            className={classesArray.join(' ')}
             onClick={rotateHandler}>
 
             <div 
