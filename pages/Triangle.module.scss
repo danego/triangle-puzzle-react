@@ -63,6 +63,36 @@ $grab-handle-diameter: 85px;
             left: 15px;
             bottom: 3px;
         }
+
+        .overlay-corner {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: $corner-side-length solid transparent;
+            border-right: $corner-side-length solid transparent;
+            border-bottom: calc($corner-side-length * 2 * .866) solid teal;  // create 2 vars for this ... 
+            // how to have triangle side length be dynamic for future screen size calcs ...
+
+            // use classnames here instead - more robust & clear
+            > div {
+                width: 20px;
+                height: 20px;
+            }
+        }
+        .overlay-corner:nth-child(1) {
+            left: calc(50% - $corner-side-length); // 1/2 of width var
+            top: -1px;
+        }
+        .overlay-corner:nth-child(2) {
+            border-bottom: calc($corner-side-length * 2 * .866) solid plum;  // create 2 vars for this ... 
+            right: calc($corner-side-length * -0.28); // -10.5px;
+            bottom: calc($corner-side-length * -0.44); // -16.5px;
+        }
+        .overlay-corner:nth-child(3) {
+            border-bottom: calc($corner-side-length * 2 * .866) solid orange;  // create 2 vars for this ... 
+            left: calc($corner-side-length * -0.28);
+            bottom: calc($corner-side-length * -0.44);
+        }
     }
 
     .orange {
