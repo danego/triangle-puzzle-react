@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import classes from './Triangle.module.scss';
 
-export default function Triangle({ odd }: { odd?: boolean}) {
+interface TriangleProps {
+    odd: boolean;
+};
+
+export default function Triangle({ odd }: TriangleProps) {
     const [pieceRotation, setPieceRotation] = useState(odd ? 180 : 0);
 
     const rotateHandler = () => {

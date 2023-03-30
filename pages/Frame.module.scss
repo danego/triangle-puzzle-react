@@ -2,11 +2,14 @@
     position: relative;
     display: flex;
     flex-direction: column;
-
+    
     border: 1px solid rebeccapurple;
-
+    
     .row {
         display: flex;
+        justify-content: center;
+        height: 130px;
+        
         border: 1px dotted tan;
     }
 }
