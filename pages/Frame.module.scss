@@ -1,0 +1,20 @@
+.frame {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid rebeccapurple;
+
+    .row {
+        display: flex;
+        border: 1px dotted tan;
+    }
+}
+
+
+.clipPath {
+    background-color: #003BDE;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    width: 100px;
+    height: 100px;
+}

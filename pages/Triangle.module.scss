@@ -1,0 +1,79 @@
+$piece-side-length: 75px;
+$corner-side-length: calc($piece-side-length / 2);
+$grab-handle-diameter: 85px;
+
+.grab-handle {
+    width: $grab-handle-diameter;
+    height: $grab-handle-diameter;
+    background-color: aqua;
+    border: 1px dotted cadetblue;
+    border-radius: 100%;
+
+    position: relative;
+    top: 22px; // replace with var
+    // margin: 
+    //     calc((150px * .866 - $grab-handle-diameter) / 2) 
+    //     calc((150px - $grab-handle-diameter) / 2);
+
+
+    &.odd {
+        top: -20px;
+    }
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-left: 75px solid transparent;
+    border-right: 75px solid transparent;
+    border-bottom: calc(150px * .866) solid white;
+    transform-origin: 50% 67%;  // x y offset
+
+    z-index: -1;
+    position: absolute;
+    bottom: -2px;
+    right: -34px;
+
+    // layer to add images & puzzle design
+    .overlay {
+        color: white;
+        width: 150px;
+        height: calc(150px * .866);
+
+
+        position: relative;
+        left: -75px;
+        // top: -10px;
+
+        > div {
+            text-align: center;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+        }
+        div:nth-child(1) {
+            left: calc(50% - 10px); // 1/2 of width var
+            top: 18px;
+        }
+        div:nth-child(2) {
+            transform: rotate(120deg);
+            right: 15px;
+            bottom: 3px;
+        }
+        div:nth-child(3) {
+            transform: rotate(-120deg);
+            left: 15px;
+            bottom: 3px;
+        }
+    }
+
+    .orange {
+        background-color: orange;
+    }
+    .purple {
+        background-color: lavender;
+    }
+    .green {
+        background-color: forestgreen;
+    }
+}
