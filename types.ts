@@ -17,9 +17,11 @@ export interface EdgeNameMapping {
 };
 
 export interface Piece {
-    edge1: Edge,
+    // edge: Edge, // for frame pieces with only one ... or just use edge1 and rest optional
+    edge1: Edge,  // need to specify what half of pair
     edge2: Edge,
     edge3: Edge,
 
+    half: 'top'
     // pieceNumber ??
 };
