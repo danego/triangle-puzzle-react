@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
+
 import Triangle from "./Triangle";
 import classes from './Frame.module.scss';
 import { Puzzle } from "@/types";
+import generateSolutions from "@/SolutionsGeneratorService";
+import puzzleBirds from "@/birds";
 
 interface FrameProps {
     quantity: number;
@@ -9,6 +12,11 @@ interface FrameProps {
 
 // RENAME to container etc 
 const frame = (props: FrameProps) => {
+
+    useEffect(() => {
+        console.log('HIIHI');
+        generateSolutions(puzzleBirds);
+    }, []);
 
     const puzzle: Puzzle = { };
 
@@ -24,8 +32,6 @@ const frame = (props: FrameProps) => {
         puzzle[`row${rowCount}`] = computedTriangles;
         rowCount++;
     }
-
-
 
     return (
         <div className={classes.frame}>
