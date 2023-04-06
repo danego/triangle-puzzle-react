@@ -43,55 +43,45 @@ $grab-handle-diameter: 85px;
         left: -75px;
         // top: -10px;
 
-        > div {
+        .overlay-edge {
+            position: absolute;
+            // make these into edge-diameter var
+            // can be significantly bigger
+            width: 50px;  
+            height: 50px;
+            clip-path: circle(50% at 50% 100%);
+            border-radius: 0;
             text-align: center;
-            width: 20px;
-            height: 20px;
-            position: absolute;
-        }
-        div:nth-child(1) {
-            left: calc(50% - 10px); // 1/2 of width var
-            top: 18px;
-        }
-        div:nth-child(2) {
-            transform: rotate(120deg);
-            right: 15px;
-            bottom: 3px;
-        }
-        div:nth-child(3) {
-            transform: rotate(-120deg);
-            left: 15px;
-            bottom: 3px;
-        }
+            font-size: 14px;
+            user-select: none;
+            
 
-        .overlay-corner {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: $corner-side-length solid transparent;
-            border-right: $corner-side-length solid transparent;
-            border-bottom: calc($corner-side-length * 2 * .866) solid teal;  // create 2 vars for this ... 
-            // how to have triangle side length be dynamic for future screen size calcs ...
-
-            // use classnames here instead - more robust & clear
-            > div {
-                width: 20px;
-                height: 20px;
+            span {
+                position: absolute;
+                bottom: -2px;
+                left: 23%;
             }
-        }
-        .overlay-corner:nth-child(1) {
-            left: calc(50% - $corner-side-length); // 1/2 of width var
-            top: -1px;
-        }
-        .overlay-corner:nth-child(2) {
-            border-bottom: calc($corner-side-length * 2 * .866) solid plum;  // create 2 vars for this ... 
-            right: calc($corner-side-length * -0.28); // -10.5px;
-            bottom: calc($corner-side-length * -0.44); // -16.5px;
-        }
-        .overlay-corner:nth-child(3) {
-            border-bottom: calc($corner-side-length * 2 * .866) solid orange;  // create 2 vars for this ... 
-            left: calc($corner-side-length * -0.28);
-            bottom: calc($corner-side-length * -0.44);
+
+            // bottom
+            &:nth-child(1) {
+                // half circle overlap idea
+                bottom: 0px;
+                left: calc(50% - 25px);
+            }
+            // left
+            &:nth-child(2) {
+                transform: rotate(120deg);
+                transform-origin: bottom;
+                left: calc(25% - 25px);
+                bottom: calc(68% - 25px);
+            }
+            // right
+            &:nth-child(3) {
+                transform: rotate(-120deg);
+                transform-origin: bottom;
+                right: calc(25% - 25px);
+                bottom: calc(68% - 25px);
+            }
         }
     }
 
