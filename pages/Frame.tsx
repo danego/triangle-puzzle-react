@@ -1,52 +1,75 @@
-import React, { useEffect } from "react";
+import React, { ReactNode, use, useContext, useEffect } from "react";
 
 import Triangle from "./Triangle";
 import classes from './Frame.module.scss';
-import { Puzzle } from "@/types";
-import generateSolutions from "@/SolutionsGeneratorService";
 import puzzleBirds from "@/birds";
+import RowContext from "@/store/row-context";
+// import SolutionsContext from '../store/solutions-context';
+import FramelessSolutionsContext from "@/store/frameless-solutions-context";
 
-interface FrameProps {
-    quantity: number;
-};
+const Frame = () => {
+    // const solutionsCtx = useContext(SolutionsContext);
+    // useMemo(() => {
+    //     solutionsCtx.findSolutions(puzzleBirds);
+    // }, []);
 
-// RENAME to container etc 
-const frame = (props: FrameProps) => {
-
+    const solutionsFramelessCtx = useContext(FramelessSolutionsContext);
     useEffect(() => {
-        console.log('HIIHI');
-        generateSolutions(puzzleBirds);
+        solutionsFramelessCtx.findSolutions(puzzleBirds);
     }, []);
 
-    const puzzle: Puzzle = { };
+    const rowContext = useContext(RowContext);
+    const loadSolutionHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        event.preventDefault();
+        const value = +event.target.value | 0;
+        if (value === -1) {
+            rowContext.loadNewSolution();
+        }
+        else {
+            rowContext.loadNewSolution(solutionsFramelessCtx.solutions[value]);
+        }
+    };
 
-    // reconfig this to not run every render ...
-    // frame will be "0"
-    let rowCount = 1;  
-    for (let i = props.quantity; i > 0; i -= 2) {
-        const quantityArray = new Array(i).fill(''); 
-        const computedTriangles = quantityArray.map((q, j) =>
-            <Triangle key={j} odd={ j % 2 !== 0 } />
-        );
+    // const rows = generateHorizontalRows();
+    const rows = rowContext.rows;
+    const elementRows: { [key: string]: ReactNode} = {};
 
-        puzzle[`row${rowCount}`] = computedTriangles;
-        rowCount++;
+    for (let i = 1; i <= 4; i++) {
+        elementRows[`row${i}`] = [];
+        // @ts-ignore
+        rows[`row${i}`].forEach((piece, j) => {
+            // @ts-ignore
+            elementRows[`row${i}`].push(
+                <Triangle key={j} odd={ j % 2 !== 0 } piece={piece} />
+            );
+        });
     }
 
     return (
         <div className={classes.frame}>
 
-            {Object.values(puzzle).reverse().map(row => 
+            {/* .reverse to show row4 at top */}
+            {Object.values(elementRows).reverse().map(row =>
                 <div className={classes.row}>
                     {row}
                 </div>
             )}
-            
-            
-            {/* <div className={classes.clipPath}></div> */}
+
+            <div>
+                <select onChange={loadSolutionHandler} defaultValue={-1}>
+                    <option>-1</option>
+                    {solutionsFramelessCtx.solutions.map((soln, index) => {
+                        return <option value={index}>{index}</option>;
+                    })}
+                </select>
+                <span> / {solutionsFramelessCtx.solutionsCount}</span>
+            </div>
+
+            <button onClick={solutionsFramelessCtx.findSolutions.bind(this, puzzleBirds)}>
+                re-run solutions
+            </button>
         </div>
     );
 };
 
-
-export default frame;
+export default Frame;

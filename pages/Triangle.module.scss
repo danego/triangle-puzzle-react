@@ -17,6 +17,17 @@ $grab-handle-diameter: 85px;
     &.odd {
         top: 0px;
     }
+
+    .piece-id {
+        color: aqua;
+        position: absolute;
+        left: calc(50% - 10px);
+        top: calc(50% - 10px);
+        user-select: none;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+    }
 }
 
 .triangle {
@@ -47,20 +58,15 @@ $grab-handle-diameter: 85px;
             position: absolute;
             // make these into edge-diameter var
             // can be significantly bigger
-            width: 50px;  
+            width: 50px;
             height: 50px;
             clip-path: circle(50% at 50% 100%);
             border-radius: 0;
             text-align: center;
             font-size: 14px;
             user-select: none;
-            
 
-            span {
-                position: absolute;
-                bottom: -2px;
-                left: 23%;
-            }
+
 
             // bottom
             &:nth-child(1) {
@@ -85,13 +91,94 @@ $grab-handle-diameter: 85px;
         }
     }
 
-    .orange {
-        background-color: orange;
+
+    .M-top {
+        height: 28px !important;
+        background-image: url('../styles/bird-images/M-top.png');
+        background-size: contain;
+        clip-path: none !important;
     }
-    .purple {
-        background-color: lavender;
+    .M-bottom {
+        height: 31px !important;
+        background-image: url('../styles/bird-images/M-bottom.png');
+        background-size: contain;
+        clip-path: none !important;
     }
-    .green {
-        background-color: forestgreen;
+    .F-top {
+        height: 21px !important;
+        background-image: url('../styles/bird-images/F-top.png');
+        background-size: contain;
+        clip-path: none !important;
+    }
+    .F-bottom {
+        height: 25px !important;
+        background-image: url('../styles/bird-images/F-bottom.png');
+        background-size: contain;
+        clip-path: none !important;
+    }
+
+    .C-top {
+        width: 38px !important;
+        height: 40px !important;
+        background-image: url('../styles/bird-images/C-top.png');
+        background-size: contain;
+        clip-path: none !important;
+    }
+    .C-bottom {
+        height: 38px !important;
+        background-image: url('../styles/bird-images/C-bottom.png');
+        background-size: contain;
+        clip-path: none !important;
+    }
+
+    .E-top {
+        width: 50px !important;
+        height: 27px !important;
+        background-image: url('../styles/bird-images/E-top.png');
+        background-size: contain;
+        clip-path: none !important;
+    }
+    .E-bottom {
+        width: 31px !important;
+        height: 40px !important;
+        background-image: url('../styles/bird-images/E-bottom.png');
+        background-size: contain;
+        clip-path: none !important;
+    }
+
+    .H-top {
+        width: 31px !important;
+        height: 33px !important;
+        background-image: url('../styles/bird-images/H-top.png');
+        background-size: contain;
+        clip-path: none !important;
+    }
+    .H-bottom {
+        width: 22px !important;
+        height: 14px !important;
+        background-image: url('../styles/bird-images/H-bottom.png');
+        background-size: contain;
+        clip-path: none !important;
+        right: calc(25% - 19px) !important;
+        bottom: calc(68% - 35px) !important;
+    }
+
+    .V-top {
+        width: 32px !important;
+        height: 28px !important;
+        background-image: url('../styles/bird-images/V-top.png');
+        background-size: contain;
+        clip-path: none !important;
+        right: calc(25% - 40px) !important;
+        bottom: calc(68% - 12px) !important;
+    }
+    .V-bottom {
+        width: 46px !important;
+        height: 27px !important;
+        background-image: url('../styles/bird-images/V-bottom.png');
+        background-size: contain;
+        clip-path: none !important;
+        right: calc(25% - 29px) !important;
+        bottom: calc(68% - 30px) !important;
     }
 }

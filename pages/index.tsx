@@ -1,6 +1,9 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
 import Frame from './Frame';
+import RowProvider from '../store/RowProvider';
+import SolutionsProvider from '@/store/SolutionsProvider';
+import FramelessSolutionsProvider from '@/store/FramelessSolutionsProvider';
 
 export default function Home() {
   return (
@@ -11,9 +14,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
+
       <main className={styles.main}>
-        <Frame quantity={7} />
+        <RowProvider>
+          <SolutionsProvider>
+            <FramelessSolutionsProvider>
+
+              <Frame />
+
+            </FramelessSolutionsProvider>
+          </SolutionsProvider>
+        </RowProvider>
       </main>
     </>
   )

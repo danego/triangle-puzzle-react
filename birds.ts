@@ -1,63 +1,97 @@
-const puzzle = {
-    // should the frame use same piece interface? Will the complication benefit later?
+import { Puzzle } from "./types";
+
+export type EdgeType = 'C' | 'E' | 'M' | 'V' | 'F' | 'H';
+// for hover values
+export interface EdgeNameMapping {
+    C: 'California Condor';
+    E: 'Bald Eagle';
+    M: 'Mexican Eagle';
+    V: 'Turkey Vulture';
+    F: 'Peregrine Falcon';
+    H: 'Red-tail Hawk';
+};
+
+const puzzle: Puzzle = {
     frame: [
+        // 9 total
         // top, right moving clockwise
         {
-            edge: 'V',
-            half: 'bottom'
+            edge1: {
+                type: 'V',
+                half: 'bottom'
+            },
+            // edge 2
+            edge3: {
+                type: 'F',
+                half: 'bottom'
+            },
         },
         {
-            edge: 'F',
-            half: 'top'
+            edge1: {
+                type: 'F',
+                half: 'top'
+            }
         },
         {
-            edge: 'C',
-            half: 'top'
+            edge1: {
+                type: 'C',
+                half: 'top'
+            }
         },
         {
-            edge: 'E',
-            half: 'top'
+            // Right Bottom corner
+            edge1: {
+                type: 'E',
+                half: 'top'
+            },
+            edge2: {
+                type: 'M',
+                half: 'bottom'
+            }
         },
         // bottom frame
         {
-            edge: 'M',
-            half: 'bottom'
+            edge1: {
+                type: 'C',
+                half: 'bottom'
+            }
         },
         {
-            edge: 'C',
-            half: 'bottom'
+            edge1: {
+                type: 'M',
+                half: 'bottom'
+            }
         },
         {
-            edge: 'M',
-            half: 'bottom'
-        },
-        {
-            edge: 'H',
-            half: 'bottom'
+            // Bottom Left Corner
+            edge1: {
+                type: 'H',
+                half: 'bottom'
+            },
+            edge2: {
+                type: 'F',
+                half: 'top'
+            }
         },
         // left frame
         {
-            edge: 'F',
-            half: 'top'
+            edge1: {
+                type: 'F',
+                half: 'bottom'
+            }
         },
         {
-            edge: 'F',
-            half: 'bottom'
+            edge1: {
+                type: 'M',
+                half: 'bottom'
+            }
         },
-        {
-            edge: 'M',
-            half: 'bottom'
-        },
-        {
-            edge: 'F',
-            half: 'bottom'
-        }
     ],
     pieces: [
         {
             id: 0,
             edge1: {
-                type: 'H', // or kind, bird, variety ...
+                type: 'H',
                 half: 'bottom'
             },
             edge2: {
