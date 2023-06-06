@@ -1,25 +1,37 @@
-$piece-side-length: 75px;
-$corner-side-length: calc($piece-side-length / 2);
-$grab-handle-diameter: 85px;
+// $piece-side-length: 75px;
+// $piece-side-length: 200px;
+// $corner-side-length: calc($piece-side-length / 2);
+// $grab-handle-diameter: 85px;
+$triangle-size: 200px;
+$grab-handle-diameter: calc($triangle-size * .577); // 57.7px;
+
+// $triangle-size: 75px;
+$triangle-size-2x: $triangle-size * 2;
 
 .grab-handle {
-    width: $grab-handle-diameter;
-    height: $grab-handle-diameter;
     background-color:  transparent; // aqua = rgba(0, 255, 255, 0.5);
     cursor: pointer; // grab
-    border: 1px dotted cadetblue;
+    // border: 1px solid cadetblue;
+    box-sizing: border-box;  // delete if border removed ... meh
     border-radius: 100%;
-
     position: relative;
-    top: 42px; // replace with var
-    margin: 0 -4px;
+
+
+    width: calc($grab-handle-diameter - .1px); // 57.6px;
+    height: calc($grab-handle-diameter - .1px); // 57.6px;
+    // height: $grab-handle-diameter;
+    top: calc($triangle-size * .27);  // 27px; // replace with var
+    margin: 0 calc($triangle-size * -.0362);
 
     &.odd {
-        top: 0px;
+        // top: -2px;
+        top: calc($triangle-size * -.02);
+        // visibility: hidden;
     }
 
     .piece-id {
         color: aqua;
+        color: white;
         position: absolute;
         left: calc(50% - 10px);
         top: calc(50% - 10px);
@@ -33,25 +45,29 @@ $grab-handle-diameter: 85px;
 .triangle {
     width: 0;
     height: 0;
-    border-left: 75px solid transparent;
-    border-right: 75px solid transparent;
-    border-bottom: calc(150px * .866) solid white;
-    transform-origin: 50% 67%;  // x y offset
+    border-left: calc($triangle-size / 2) solid transparent;
+    border-right: calc($triangle-size / 2) solid transparent;
+    border-bottom: calc($triangle-size * .866) solid paleturquoise;
+    transform-origin: 50% 66.66%;  // x y offset
 
     z-index: -1;
     position: absolute;
-    bottom: -2px;
-    right: -34px;
+    // bottom: -2px;
+    bottom: -1px;  // remove if grab-handle border removal
+    right: calc($triangle-size * -.2145); //  -22px;
+    // right: -21.5px;  // change 1/2px after border removal ..
 
     // layer to add images & puzzle design
+    // CHECK POSITIONING ON THIS ONE HMM ...
     .overlay {
         color: white;
-        width: 150px;
-        height: calc(150px * .866);
+        width: $triangle-size;
+        // width: 150px;
+        height: calc($triangle-size * .866);
 
 
         position: relative;
-        left: -75px;
+        left: calc($triangle-size * -.5);
         // top: -10px;
 
         .overlay-edge {
@@ -60,125 +76,154 @@ $grab-handle-diameter: 85px;
             // can be significantly bigger
             width: 50px;
             height: 50px;
-            clip-path: circle(50% at 50% 100%);
+
+            // clip-path: circle(50% at 50% 100%);
             border-radius: 0;
             text-align: center;
             font-size: 14px;
             user-select: none;
 
+            // bird specific images
+            & > div {
+                position: absolute;
+                bottom: 0;
+                background-size: contain;
+            }
 
+
+            // !!!! You could totally customize the edge overlaps!!
+            // select/upload an image - cut it in half and load correct half for matching pair edge
+            // span {
+            //     position: absolute;
+            //     bottom: -2px;
+            //     left: 23%;
+            // }
 
             // bottom
             &:nth-child(1) {
                 // half circle overlap idea
                 bottom: 0px;
                 left: calc(50% - 25px);
+
+                border: 1px solid indianred;
             }
             // left
             &:nth-child(2) {
                 transform: rotate(120deg);
                 transform-origin: bottom;
                 left: calc(25% - 25px);
-                bottom: calc(68% - 25px);
+                bottom: calc(50%);
+
+                border: 1px solid navy;
             }
             // right
             &:nth-child(3) {
                 transform: rotate(-120deg);
                 transform-origin: bottom;
                 right: calc(25% - 25px);
-                bottom: calc(68% - 25px);
+                bottom: 50%;
+
+                border: 1px solid turquoise;
             }
         }
     }
 
 
+    // COULD set one big circle size for these bird images
+    // then lower opacity ... pretty good
+    // SHould be percentages of container for resizing
     .M-top {
-        height: 28px !important;
+        $M-top: 116%;  // = % base for all other M sizes - but also a % of triangle size
+        // width: 58px;
+        // width: 30px;
+
+        width: $M-top;
+        height: calc($M-top * .517);
+        // right: calc($M-top * )
+
+        border: 1px solid lime;
+        left: 50%;
+        transform: translate(-50%);
+
         background-image: url('../styles/bird-images/M-top.png');
-        background-size: contain;
-        clip-path: none !important;
+        // right: 1px;
+        bottom: -1px !important
     }
     .M-bottom {
-        height: 31px !important;
+        // width: $M-top;
+
+        width: 53px;
+        height: 32px;
         background-image: url('../styles/bird-images/M-bottom.png');
-        background-size: contain;
-        clip-path: none !important;
+        // right: -6px;
+
+        border: 1px solid lime;
+        left: 50%;
+        transform: translate(-50%);
     }
+
     .F-top {
-        height: 21px !important;
+        width: 56px;
+        height: 24px;
         background-image: url('../styles/bird-images/F-top.png');
-        background-size: contain;
-        clip-path: none !important;
+        right: 0px;
     }
     .F-bottom {
-        height: 25px !important;
+        width: 46px;
+        height: 24px;
         background-image: url('../styles/bird-images/F-bottom.png');
-        background-size: contain;
-        clip-path: none !important;
+        right: -3px;
     }
 
     .C-top {
-        width: 38px !important;
-        height: 40px !important;
+        width: 49px;
+        height: 52px;
         background-image: url('../styles/bird-images/C-top.png');
-        background-size: contain;
-        clip-path: none !important;
+        right: -1px;
     }
     .C-bottom {
-        height: 38px !important;
+        width: 70px;
+        height: 53px;
         background-image: url('../styles/bird-images/C-bottom.png');
-        background-size: contain;
-        clip-path: none !important;
+        right: -2px;
     }
 
     .E-top {
-        width: 50px !important;
-        height: 27px !important;
+        width: 59px !important;
+        height: 35px !important;
         background-image: url('../styles/bird-images/E-top.png');
-        background-size: contain;
-        clip-path: none !important;
+        right: 5px;
     }
     .E-bottom {
-        width: 31px !important;
-        height: 40px !important;
+        width: 36px;
+        height: 39px;
         background-image: url('../styles/bird-images/E-bottom.png');
-        background-size: contain;
-        clip-path: none !important;
+        right: 9px;
     }
 
     .H-top {
-        width: 31px !important;
-        height: 33px !important;
+        width: 49px;
+        height: 43px !important;
         background-image: url('../styles/bird-images/H-top.png');
-        background-size: contain;
-        clip-path: none !important;
+        right: 6px;
     }
     .H-bottom {
-        width: 22px !important;
-        height: 14px !important;
+        width: 36px;
+        height: 20px;
         background-image: url('../styles/bird-images/H-bottom.png');
-        background-size: contain;
-        clip-path: none !important;
-        right: calc(25% - 19px) !important;
-        bottom: calc(68% - 35px) !important;
+        right: 12px;
     }
 
     .V-top {
-        width: 32px !important;
-        height: 28px !important;
+        width: 46px;
+        height: 40px;
         background-image: url('../styles/bird-images/V-top.png');
-        background-size: contain;
-        clip-path: none !important;
-        right: calc(25% - 40px) !important;
-        bottom: calc(68% - 12px) !important;
+        left: -4px;
     }
     .V-bottom {
-        width: 46px !important;
-        height: 27px !important;
+        width: 69px;
+        height: 37px;
         background-image: url('../styles/bird-images/V-bottom.png');
-        background-size: contain;
-        clip-path: none !important;
-        right: calc(25% - 29px) !important;
-        bottom: calc(68% - 30px) !important;
+        right: 9px;
     }
 }
