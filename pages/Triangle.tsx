@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import classes from './Triangle.module.scss';
 import { PieceWithRotation } from '@/RowLoaderService';
@@ -34,9 +34,10 @@ export default function Triangle(props: TriangleProps) {
     }
 
     const [pieceRotation, setPieceRotation] = useState(startingRotation);
-    if (pieceRotation !== startingRotation) {
+
+    useEffect(() => {
         setPieceRotation(startingRotation);
-    }
+    }, [props.piece, startingRotation]);
 
     const rotateHandler = () => {
         setPieceRotation(pieceRotation => {
@@ -52,7 +53,6 @@ export default function Triangle(props: TriangleProps) {
             }
             return newPieceRotation;
         });
-
     };
 
     return (
@@ -66,16 +66,23 @@ export default function Triangle(props: TriangleProps) {
                 style={{ transform : `rotate(${pieceRotation}deg)` }}
                 className={classes.triangle}>
 
-                <div className={classes.overlay}>
-                    {/* bottom  - go clockwise */}
-                    <div className={[classes['overlay-edge'], classes[`${props.piece.edge1.type + '-' + props.piece.edge1.half}`]].join(' ')}></div>
+                {true && <div className={classes.overlay}>
 
-                    {/* left */}
-                    <div className={[classes['overlay-edge'], classes[`${props.piece.edge2.type + '-' + props.piece.edge2.half}`]].join(' ')}></div>
+                    {/* bottom 1  - go clockwise */}
+                    <div className={classes['overlay-edge']}>
+                        <div className={classes[`${props.piece.edge1.type + '-' + props.piece.edge1.half}`]}></div>
+                    </div>
 
-                    {/* right */}
-                    <div className={[classes['overlay-edge'], classes[`${props.piece.edge3.type + '-' + props.piece.edge3.half}`]].join(' ')}></div>
-                </div>
+                    {/* left 2 */}
+                    <div className={classes['overlay-edge']}>
+                        <div className={classes[`${props.piece.edge2.type + '-' + props.piece.edge2.half}`]}></div>
+                    </div>
+
+                    {/* right / 3 */}
+                    <div className={classes['overlay-edge']}>
+                        <div className={classes[`${props.piece.edge3.type + '-' + props.piece.edge3.half}`]}></div>
+                    </div>
+                </div>}
             </div>
         </div>
     );
