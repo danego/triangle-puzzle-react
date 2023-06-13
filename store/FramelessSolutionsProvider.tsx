@@ -10,7 +10,7 @@ interface Props {
 interface State {
     solutions: TrackingArray[];
     solutionsCount: number;
-    findSolutions: (puzzle: Puzzle) => void;
+    findSolutions: (puzzle: Puzzle) => TrackingArray[];
 }
 
 class FramelessSolutionsProvider extends Component<Props, State> {
@@ -20,7 +20,7 @@ class FramelessSolutionsProvider extends Component<Props, State> {
             solutions: [],
             solutionsCount: -1,
             findSolutions: (puzzle: Puzzle) => {
-                this.generateSolutions(puzzle);
+                return this.generateSolutions(puzzle);
             }
         }
     }

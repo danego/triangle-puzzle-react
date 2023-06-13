@@ -1,0 +1,66 @@
+$triangle-size: 200px;
+$triangle-size-2x: $triangle-size * 2;
+$grab-handle-diameter: calc($triangle-size * .577); // 57.7px;
+
+.grab-handle {
+    background-color:  transparent; // aqua = rgba(0, 255, 255, 0.5);
+    cursor: crosshair; // grab
+    // border: 1px solid cadetblue;
+    box-sizing: border-box;  // delete if border removed ... meh
+    border-radius: 100%;
+    position: relative;
+
+    width: calc($grab-handle-diameter - .1px); // 57.6px;
+    height: calc($grab-handle-diameter - .1px); // 57.6px;
+    top: calc($triangle-size * .27);  // 27px;
+    margin: 0 calc($triangle-size * -.0392);
+
+    &.odd {
+        top: calc($triangle-size * -.02);
+        // visibility: hidden;
+    }
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-left: calc($triangle-size / 2) solid transparent;
+    border-right: calc($triangle-size / 2) solid transparent;
+    border-bottom: calc($triangle-size * .866) solid whitesmoke;
+    transform-origin: 50% 66.66%;  // x y offset
+
+    z-index: -1;
+    position: absolute;
+    bottom: -1px;  // remove if grab-handle border removal
+    right: calc($triangle-size * -.2145); //  -22px;
+
+    > div {
+      width: $triangle-size;
+      height: 2.5px;  // VARIABLE
+      background: paleturquoise;
+      background: yellow;
+      position: absolute;
+
+      &:nth-child(1) {
+        width: calc($triangle-size + 2px);
+        transform-origin: left;
+        bottom: calc($triangle-size * -.866);
+        left: calc($triangle-size * -.5 - 1px);
+      }
+      &:nth-child(2) {
+        transform: rotate(-60deg);
+        transform-origin: left;
+        bottom: calc($triangle-size * -.866);
+        // left: 2px;
+        left: calc($triangle-size * -.5);
+
+      }
+      &:nth-child(3) {
+        transform: rotate(60deg);
+        transform-origin: right;
+        bottom: calc($triangle-size * -.866);
+        // right: 2px;
+        right: calc($triangle-size * -.5);
+      }
+  }
+}

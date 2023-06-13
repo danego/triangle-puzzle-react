@@ -27,3 +27,9 @@ interface TrackingArrayPiece {
     firstEdge?: number;
 }
 export interface TrackingArray extends Array<TrackingArrayPiece> {};
+
+export enum SolutionTypes {
+    default = 'Default',
+    framed = 'Framed',
+    frameless = 'Frameless'
+}

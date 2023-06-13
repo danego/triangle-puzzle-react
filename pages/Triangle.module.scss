@@ -1,33 +1,16 @@
-// $piece-side-length: 75px;
-// $piece-side-length: 200px;
-// $corner-side-length: calc($piece-side-length / 2);
-// $grab-handle-diameter: 85px;
 $triangle-size: 200px;
-$grab-handle-diameter: calc($triangle-size * .577); // 57.7px;
-
-// $triangle-size: 75px;
 $triangle-size-2x: $triangle-size * 2;
+$grab-handle-diameter: calc($triangle-size * .577); // 57.7px;
 
 .grab-handle {
     background-color:  transparent; // aqua = rgba(0, 255, 255, 0.5);
     cursor: pointer; // grab
     // border: 1px solid cadetblue;
-    box-sizing: border-box;  // delete if border removed ... meh
     border-radius: 100%;
+    box-sizing: border-box;  // delete if border removed ... meh
     position: relative;
-
-
     width: calc($grab-handle-diameter - .1px); // 57.6px;
     height: calc($grab-handle-diameter - .1px); // 57.6px;
-    // height: $grab-handle-diameter;
-    top: calc($triangle-size * .27);  // 27px; // replace with var
-    margin: 0 calc($triangle-size * -.0362);
-
-    &.odd {
-        // top: -2px;
-        top: calc($triangle-size * -.02);
-        // visibility: hidden;
-    }
 
     .piece-id {
         color: aqua;
@@ -52,32 +35,21 @@ $triangle-size-2x: $triangle-size * 2;
 
     z-index: -1;
     position: absolute;
-    // bottom: -2px;
     bottom: -1px;  // remove if grab-handle border removal
     right: calc($triangle-size * -.2145); //  -22px;
-    // right: -21.5px;  // change 1/2px after border removal ..
 
     // layer to add images & puzzle design
-    // CHECK POSITIONING ON THIS ONE HMM ...
     .overlay {
         color: white;
         width: $triangle-size;
-        // width: 150px;
         height: calc($triangle-size * .866);
-
-
         position: relative;
         left: calc($triangle-size * -.5);
-        // top: -10px;
 
         .overlay-edge {
             position: absolute;
-            // make these into edge-diameter var
-            // can be significantly bigger
             width: 50px;
             height: 50px;
-
-            // clip-path: circle(50% at 50% 100%);
             border-radius: 0;
             text-align: center;
             font-size: 14px;
@@ -90,21 +62,10 @@ $triangle-size-2x: $triangle-size * 2;
                 background-size: contain;
             }
 
-
-            // !!!! You could totally customize the edge overlaps!!
-            // select/upload an image - cut it in half and load correct half for matching pair edge
-            // span {
-            //     position: absolute;
-            //     bottom: -2px;
-            //     left: 23%;
-            // }
-
             // bottom
             &:nth-child(1) {
-                // half circle overlap idea
                 bottom: 0px;
                 left: calc(50% - 25px);
-
                 border: 1px solid indianred;
             }
             // left
@@ -114,7 +75,7 @@ $triangle-size-2x: $triangle-size * 2;
                 left: calc(25% - 25px);
                 bottom: calc(50%);
 
-                border: 1px solid navy;
+                // border: 1px solid navy;
             }
             // right
             &:nth-child(3) {
@@ -123,15 +84,11 @@ $triangle-size-2x: $triangle-size * 2;
                 right: calc(25% - 25px);
                 bottom: 50%;
 
-                border: 1px solid turquoise;
+                // border: 1px solid turquoise;
             }
         }
     }
 
-
-    // COULD set one big circle size for these bird images
-    // then lower opacity ... pretty good
-    // SHould be percentages of container for resizing
     .M-top {
         $M-top: 116%;  // = % base for all other M sizes - but also a % of triangle size
         // width: 58px;

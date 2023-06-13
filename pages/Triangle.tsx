@@ -1,16 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { RootState } from '@/store';
+import { actions as piecesActions } from '../store/pieces';
+import { Piece } from '@/types';
 import classes from './Triangle.module.scss';
-import { PieceWithRotation } from '@/RowLoaderService';
 
 interface TriangleProps {
+    piece: Piece;
+    spotId: number;
     odd?: boolean;
-    piece: PieceWithRotation;
 };
 
 export default function Triangle(props: TriangleProps) {
+    const rotation = useSelector<RootState>((state) => state.pieces.board['spot' + props.spotId].rotation);
+    const dispatch = useDispatch();
 
-    let startingRotation = props.odd ? 180 : 0;
+    let rotationDegrees = props.odd ? 180 : 0;
+    // this logic should be moved to row loader service - when store added
     // For framed solns:
     // switch(props.piece.masterIndex) {
     //     case 0: ;
@@ -24,35 +30,14 @@ export default function Triangle(props: TriangleProps) {
     //         break;
 
     // }
-    if (props.piece.firstEdge) {
-        if (props.piece.firstEdge === 2) {
-            startingRotation += 240;
-        }
-        else if (props.piece.firstEdge === 3) {
-            startingRotation += 120;
-        }
+
+    if (rotation) {
+        if (rotation === 2) rotationDegrees += 240;
+        else if (rotation === 3) rotationDegrees += 120;
     }
 
-    const [pieceRotation, setPieceRotation] = useState(startingRotation);
-
-    useEffect(() => {
-        setPieceRotation(startingRotation);
-    }, [props.piece, startingRotation]);
-
     const rotateHandler = () => {
-        setPieceRotation(pieceRotation => {
-            let newPieceRotation;
-            if (pieceRotation === 240 || pieceRotation === 420) {
-                newPieceRotation = 0;
-            } else {
-                newPieceRotation = pieceRotation + 120
-            }
-
-            if (props.odd && newPieceRotation === 0) {
-                newPieceRotation = 180;
-            }
-            return newPieceRotation;
-        });
+        dispatch(piecesActions.rotate(props.spotId));
     };
 
     return (
@@ -63,11 +48,10 @@ export default function Triangle(props: TriangleProps) {
             <span className={classes['piece-id']}>{props.piece.id}</span>
 
             <div
-                style={{ transform : `rotate(${pieceRotation}deg)` }}
+                style={{ transform : `rotate(${rotationDegrees}deg)` }}
                 className={classes.triangle}>
 
-                {true && <div className={classes.overlay}>
-
+                <div className={classes.overlay}>
                     {/* bottom 1  - go clockwise */}
                     <div className={classes['overlay-edge']}>
                         <div className={classes[`${props.piece.edge1.type + '-' + props.piece.edge1.half}`]}></div>
@@ -82,7 +66,7 @@ export default function Triangle(props: TriangleProps) {
                     <div className={classes['overlay-edge']}>
                         <div className={classes[`${props.piece.edge3.type + '-' + props.piece.edge3.half}`]}></div>
                     </div>
-                </div>}
+                </div>
             </div>
         </div>
     );
