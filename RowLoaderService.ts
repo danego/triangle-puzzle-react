@@ -1,41 +1,66 @@
-import { Piece } from "./types";
-import puzzle from "./birds";
+import { Piece, TrackingArray } from "./types";
 
-export interface PieceWithRotation extends Piece {
-    firstEdge?: number | undefined;
-    masterIndex: number
-    // ^ this will have to be reconfigured once drag & drop bc pieces will not be connected to their spot
-}
+export const generateHorizontalTrackingArray = (trackingArray: TrackingArray) => {
+    let row4: TrackingArray = [];
+    let row3: TrackingArray = [];
+    let row2: TrackingArray = [];
+    let row1: TrackingArray = [];
 
+    row4.push({
+        ...trackingArray[0],
+        firstEdge: convertRotationValue(trackingArray[0].firstEdge, 1)
+    });
 
-    for (let i = 0; i < 16; i++) {
-        let newPieceWithRotation = {
-            ...pieces[i],
-            masterIndex: i
-        };
-        if (trackingArray) {
-            newPieceWithRotation = {
-                ...newPieceWithRotation,
-                //@ts-ignore
-                firstEdge: trackingArray[i].firstEdge
-            };
+    row3 = [
+        {
+            ...trackingArray[8],
+            firstEdge: convertRotationValue(trackingArray[8].firstEdge, 2)
+        },
+        trackingArray[9],
+        {
+            ...trackingArray[1],
+            firstEdge: convertRotationValue(trackingArray[1].firstEdge, 1)
         }
+    ];
 
-        if (i <= 6) {
-            rows.row1.push(newPieceWithRotation);
+    row2 = [
+        {
+            ...trackingArray[7],
+            firstEdge: convertRotationValue(trackingArray[7].firstEdge, 2)
+        },
+        trackingArray[14],
+        trackingArray[15],
+        trackingArray[10],
+        {
+            ...trackingArray[2],
+            firstEdge: convertRotationValue(trackingArray[2].firstEdge, 1)
         }
-        else if (i <= 11) {
-            rows.row2.push(newPieceWithRotation);
-        }
-        else if (i <= 14) {
-            rows.row3.push(newPieceWithRotation);
-        }
-        else {
-            rows.row4.push(newPieceWithRotation);
-        }
+    ];
+
+    row1 = [
+        trackingArray[6],
+        trackingArray[13],
+        trackingArray[5],
+        trackingArray[12],
+        trackingArray[4],
+        trackingArray[11],
+        {
+            ...trackingArray[3],
+            firstEdge: convertRotationValue(trackingArray[3].firstEdge, 1)
+        },
+    ];
+    const horizontalTrackingArray: TrackingArray = row1.concat(row2).concat(row3).concat(row4);
+    return horizontalTrackingArray;
+};
+
+function convertRotationValue(firstEdgeNumber: number | undefined, newEdgeDifference: number): number {
+    let newRotation;
+    if (!firstEdgeNumber) firstEdgeNumber = 1;
+
+    newRotation = firstEdgeNumber + newEdgeDifference;
+
+    if (newRotation > 3) {
+        newRotation = newRotation % 3;
     }
-
-    return rows;
+    return newRotation;
 }
-
-export default generateHorizontalRows;

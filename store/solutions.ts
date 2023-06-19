@@ -1,11 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { generateHorizontalTrackingArray } from '@/RowLoaderService';
+import { Action, ActionCreator, createSlice, Dispatch, PayloadAction, ThunkAction, ThunkDispatch } from '@reduxjs/toolkit';
 
 import { TrackingArray, SolutionTypes } from '../types';
-import { actions as boardActions } from './pieces';
+import { actions as pieceActions } from './pieces';
 
 type SolutionType = SolutionTypes.default | SolutionTypes.framed | SolutionTypes.frameless;
 
-export interface SolutionsState {
+interface PayloadType {
+    type: SolutionType;
+    number: number
+}
+
+interface SolutionsState {
     type: SolutionType | '';
     solutionNumber: number;
     solution: TrackingArray;
@@ -25,7 +31,7 @@ const solutions = createSlice({
     name: 'solutions',
     initialState,
     reducers: {
-        setSolution(state, action) {
+        setSolution(state, action: PayloadAction<PayloadType>) {
             state.type = action.payload.type;
             state.solutionNumber = action.payload.number;
 
@@ -41,7 +47,7 @@ const solutions = createSlice({
                 state.solution = state.allSolutionsFrameless[action.payload.number];
             }
         },
-        storeSolutions(state, action) {
+        storeSolutions(state, action: PayloadAction<{type: SolutionType, solutions: TrackingArray[]}>) {
             if (action.payload.type === SolutionTypes.framed) {
                 state.allSolutionsFramed = action.payload.solutions;
             }
@@ -57,19 +63,25 @@ export const solutionsActions = solutions.actions;
 
 
 export const loadSolution = (payload: any) => {
-    //@ts-ignore
-    return (dispatch, getState) => {
+    return (dispatch: Dispatch<any>, getState: any) => {
         const solutionsState = getState().solutions;
         dispatch(solutionsActions.setSolution(payload));
 
         if (payload.type === SolutionTypes.default) {
+            if (payload.number === -1) {
+                dispatch(pieceActions.loadEmpty());
+            }
+            else if (payload.number === 0) {
+                dispatch(pieceActions.loadDefault());
+            }
         }
         else if (payload.type === SolutionTypes.framed) {
-            // fix rotation values from triangle here
-            dispatch(boardActions.loadSolution(solutionsState.allSolutionsFramed[payload.number]));
+            const trackingArray = solutionsState.allSolutionsFramed[payload.number];
+            const trackingArrayHorizontal = generateHorizontalTrackingArray(trackingArray);
+            dispatch(pieceActions.loadSolution(trackingArrayHorizontal));
         }
         else if (payload.type === SolutionTypes.frameless) {
-            dispatch(boardActions.loadSolution(solutionsState.allSolutionsFrameless[payload.number]));
+            dispatch(pieceActions.loadSolution(solutionsState.allSolutionsFrameless[payload.number]));
         }
     }
 }

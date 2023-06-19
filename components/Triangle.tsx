@@ -1,9 +1,7 @@
-import { useDispatch, useSelector } from 'react-redux';
-
-import { RootState } from '@/store';
+import classes from './Triangle.module.scss';
 import { actions as piecesActions } from '../store/pieces';
 import { Piece } from '@/types';
-import classes from './Triangle.module.scss';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 
 interface TriangleProps {
     piece: Piece;
@@ -12,25 +10,10 @@ interface TriangleProps {
 };
 
 export default function Triangle(props: TriangleProps) {
-    const rotation = useSelector<RootState>((state) => state.pieces.board['spot' + props.spotId].rotation);
-    const dispatch = useDispatch();
+    const rotation = useAppSelector((state) => state.pieces.board['spot' + props.spotId].rotation);
+    const dispatch = useAppDispatch();
 
     let rotationDegrees = props.odd ? 180 : 0;
-    // this logic should be moved to row loader service - when store added
-    // For framed solns:
-    // switch(props.piece.masterIndex) {
-    //     case 0: ;
-    //     case 1: ;
-    //     case 2:
-    //         startingRotation = 240;
-    //         break;
-    //     case 7: ;
-    //     case 8:
-    //         startingRotation = 120;
-    //         break;
-
-    // }
-
     if (rotation) {
         if (rotation === 2) rotationDegrees += 240;
         else if (rotation === 3) rotationDegrees += 120;

@@ -1,9 +1,6 @@
-import { useSelector } from 'react-redux';
-
 import classes from './Spot.module.scss';
 import Triangle from './Triangle';
-import { RootState } from '@/store';
-import { Piece } from '@/types';
+import { useAppSelector } from '../store/hooks';
 
 interface SpotProps {
     id: number;
@@ -11,7 +8,7 @@ interface SpotProps {
 };
 
 export default function Spot(props: SpotProps) {
-    const piece = useSelector<RootState>((state) => state.pieces.board['spot' + props.id].piece) as Piece;
+    const piece = useAppSelector((state) => state.pieces.board['spot' + props.id].piece);
     let rotation = props.odd ? 180 : 0;
 
     return (

@@ -1,8 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Piece } from '../types';
+import { Piece, TrackingArray } from '../types';
 import puzzle from '../birds';
-
 
 interface PiecesState {
     board: {
@@ -12,47 +11,41 @@ interface PiecesState {
             rotation: number | null;
         }
     },
+    // bank
+    // isDragging, Piece
 }
 
 const initialSpotState = {
     piece: null,
     rotation: 1,
-  };
+};
+const initialBoardState = {
+    spot0: initialSpotState,
+    spot1: initialSpotState,
+    spot2: initialSpotState,
+    spot3: initialSpotState,
+    spot4: initialSpotState,
+    spot5: initialSpotState,
+    spot6: initialSpotState,
+    spot7: initialSpotState,
+    spot8: initialSpotState,
+    spot9: initialSpotState,
+    spot10: initialSpotState,
+    spot11: initialSpotState,
+    spot12: initialSpotState,
+    spot13: initialSpotState,
+    spot14: initialSpotState,
+    spot15: initialSpotState,
+};
 const initialState: PiecesState = {
-    board: {
-        spot0: initialSpotState,
-        spot1: initialSpotState,
-        spot2: initialSpotState,
-        spot3: initialSpotState,
-        spot4: initialSpotState,
-        spot5: initialSpotState,
-        spot6: initialSpotState,
-        spot7: initialSpotState,
-        spot8: initialSpotState,
-        spot9: initialSpotState,
-        spot10: initialSpotState,
-        spot11: initialSpotState,
-        spot12: initialSpotState,
-        spot13: initialSpotState,
-        spot14: initialSpotState,
-        spot15: initialSpotState,
-    }
+    board: initialBoardState
 };
 
 const pieces = createSlice({
     name: 'pieces',
     initialState,
     reducers: {
-        start(state) {
-            for (const key in state.board) {
-              const spotNumber = +key.replace('spot', '');
-              state.board[key] = {
-                piece: puzzle.pieces[spotNumber],
-                rotation: 1,
-              };
-            }
-        },
-        rotate(state, action) {
+        rotate(state, action: PayloadAction<number>) {
             const spotId = 'spot' + action.payload;
             let newRotation;
             if (!state.board[spotId].rotation) {
@@ -66,8 +59,7 @@ const pieces = createSlice({
             }
             state.board[spotId]!.rotation = newRotation;
         },
-
-        loadSolution(state, action) {
+        loadSolution(state, action: PayloadAction<TrackingArray>) {
             const trackingArray = action.payload;
 
             for (let i = 0; i < trackingArray.length; i++) {
@@ -77,7 +69,19 @@ const pieces = createSlice({
                     rotation: trackingArray[i].firstEdge || 1,
                 };
             }
-        }
+        },
+        loadDefault(state) {
+            for (const key in state.board) {
+                const spotNumber = +key.replace('spot', '');
+                state.board[key] = {
+                  piece: puzzle.pieces[spotNumber],
+                  rotation: 1,
+                };
+            }
+        },
+        loadEmpty(state) {
+            state.board = initialBoardState;
+        },
     }
 });
 

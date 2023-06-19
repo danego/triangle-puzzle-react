@@ -51,6 +51,8 @@ class FramelessSolutionsProvider extends Component<Props, State> {
 
 
         this.allPuzzlePieces = puzzle.pieces;
+        // should solutions be array of IDs or array of entire puzzle piece sorted ??
+        // Does it even matter
         const trackingArray: TrackingArray = [
             { id: 0 },
             { id: 1 },
@@ -94,6 +96,7 @@ class FramelessSolutionsProvider extends Component<Props, State> {
     }
 
     // 0 -> 6 indices
+    // the values for each specifc row func should be curried !!!!
     private row1Permutations(switchSpot: number, switchCandidate: number, trackingArray: TrackingArray, pieceRotation?: number) {
         this.row1PermCounter++;
         let availableBranches: boolean = true;
@@ -181,6 +184,7 @@ class FramelessSolutionsProvider extends Component<Props, State> {
             }
         }
 
+        // FIRST CALL - Try all candidates for current switchSpot
         if (switchSpot === 7 && switchCandidate === 7 && pieceRotation === undefined) {
             this.row2Permutations(7, 7, trackingArray, 2);
             this.row2Permutations(7, 7, trackingArray, 3);

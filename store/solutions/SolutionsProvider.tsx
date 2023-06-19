@@ -1,6 +1,5 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
-import RowContext from './row-context';
 import SolutionsContext from './solutions-context';
 import { Edge, Piece, Puzzle, TrackingArray } from '@/types';
 
@@ -11,7 +10,7 @@ const SolutionsProvider = (props: any) => {
     const generateSolutions = (puzzle: Puzzle) => {
         const allPuzzlePieces: Piece[] = puzzle.pieces;
 
-        const solutions: TrackingArray[] = [];
+        let solutions: TrackingArray[] = [];
         const trackingArray: TrackingArray = [
             { id: 0 },
             { id: 1 },
@@ -31,6 +30,15 @@ const SolutionsProvider = (props: any) => {
             { id: 15 }
         ];
 
+        const windowIsUndefined = typeof window === 'undefined';
+        if (!windowIsUndefined && localStorage.getItem('solutions-framed')) {
+            console.log('USING stored solutions - FRAMED');
+            solutions = JSON.parse(localStorage.getItem('solutions-framed')!);
+            setAllSolutions(solutions);
+            setAllSolutionsCount(solutions.length);
+            return solutions;
+        }
+
         let row1PermCounter = 0;
         let perfectRow1 = 0;
         let perfectRow2 = 0;
@@ -42,6 +50,10 @@ const SolutionsProvider = (props: any) => {
         console.log('ROW 22222', perfectRow2, ' / ', row2PermCounter);
         // console.log('ROW 1 UNIQUE', row1UniqueCornerSolutions);
         // console.log('SPECIFIC solns for piece 9', _741535Counter);
+
+        if (!windowIsUndefined) {
+            localStorage.setItem('solutions-framed', JSON.stringify(solutions));
+        }
 
         return solutions;
 
@@ -483,6 +495,7 @@ const SolutionsProvider = (props: any) => {
             const solutions = generateSolutions(puzzle);
             setAllSolutions(solutions);
             setAllSolutionsCount(solutions.length);
+            return solutions;
         }
     };
 

@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 import classes from './Board.module.scss';
-import Spot from '../pages/Spot';
+import Spot from './Spot';
 
 const ROWS: { [key: string]: any[] } = {
     row4: Array(1).fill({}),

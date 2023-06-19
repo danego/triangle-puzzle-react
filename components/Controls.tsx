@@ -1,28 +1,20 @@
 import { useContext } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import classes from './Controls.module.scss';
-import { RootState } from "../store/index";
-import { actions as piecesActions } from '../store/pieces';
-import { SolutionsState, loadSolution } from '../store/solutions';
-import FramelessSolutionsContext from '../store/frameless-solutions-context';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { loadSolution } from '../store/solutions';
+import FramelessSolutionsContext from '../store/solutions/frameless-solutions-context';
 import puzzleBirds from '../birds';
 import { SolutionTypes } from '../types';
 
 const Controls = () => {
-    const solutionsState = useSelector<RootState>(state => state.solutions) as SolutionsState;
+    const solutionsState = useAppSelector(state => state.solutions);
     const solutionsFramelessCtx = useContext(FramelessSolutionsContext);
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-
-    const stateButtonHandler = () => {
-        dispatch(piecesActions.start());
-    };
-
-    const loadSolutionHandler2 = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const loadSolutionHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
         event?.preventDefault();
         const value = event.target.value;
-        //@ts-ignore
         dispatch(loadSolution({
             type: value.split('|')[0],
             number: +value.split('|')[1]
@@ -36,16 +28,16 @@ const Controls = () => {
                 re-run solutions
             </button>
 
-            <button onClick={stateButtonHandler}>STATE</button>
-
-            <select id="solutions" onChange={loadSolutionHandler2}>
+            <select id="solutions" onChange={loadSolutionHandler} defaultValue={SolutionTypes.default + '|' + '-1'}>
                 <optgroup label="Default">
-                    <option value={SolutionTypes.default + '|' + '-1'}>-1</option>
-                    <option value={SolutionTypes.default + '|' + '0'}>0</option>
+                    <option value={SolutionTypes.default + '|' + '-1'}>Empty</option>
+                    <option value={SolutionTypes.default + '|' + '0'}>SEQ</option>
                 </optgroup>
 
                 <optgroup label="Framed">
-                    <option value={SolutionTypes.framed + '|' + '-1'}>1</option>
+                    {solutionsState.allSolutionsFramed.map((soln, i) => {
+                        return <option value={SolutionTypes.framed + '|' + i}  key={i}>{i}</option>
+                    })}
                 </optgroup>
 
                 <optgroup label="Frameless">

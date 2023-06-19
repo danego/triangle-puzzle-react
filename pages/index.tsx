@@ -2,11 +2,10 @@ import Head from 'next/head'
 import { Provider } from 'react-redux';
 
 import styles from '@/styles/Home.module.css'
-import Frame from './Container';
-import RowProvider from '../store/RowProvider';
-import SolutionsProvider from '@/store/SolutionsProvider';
-import FramelessSolutionsProvider from '@/store/FramelessSolutionsProvider';
-import store from '../store/index';
+import Frame from '../components/Container';
+import SolutionsProvider from '@/store/solutions/SolutionsProvider';
+import FramelessSolutionsProvider from '@/store/solutions/FramelessSolutionsProvider';
+import store from '../store/store';
 
 export default function Home() {
   return (
@@ -21,15 +20,13 @@ export default function Home() {
       <main className={styles.main}>
         {/* Seems like this is a messy way to do have all these providers -
           could prob put them all in separate component */}
-        <RowProvider>
-          <SolutionsProvider>
-            <FramelessSolutionsProvider>
+        <SolutionsProvider>
+          <FramelessSolutionsProvider>
 
-              <Frame />
+            <Frame />
 
-            </FramelessSolutionsProvider>
-          </SolutionsProvider>
-        </RowProvider>
+          </FramelessSolutionsProvider>
+        </SolutionsProvider>
       </main>
     </Provider>
   )
