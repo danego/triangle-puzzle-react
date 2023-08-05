@@ -88,98 +88,78 @@
         }
     }
 
+    // = % base for all other M sizes - but also a % of triangle size
+    // separate bird numbers (vs just writing %s in .M-top properties) means you can adjust entire relative bird sizes
+    $M: 100%;
+    $F: 112%;
+    $C: 85%;
+    $E: 150%;
+    $H: 89%;
+    $V: 102%;
+
     .M-top {
-        $M-top: 116%;  // = % base for all other M sizes - but also a % of triangle size
-        // width: 58px;
-        // width: 30px;
-
-        width: $M-top;
-        height: calc($M-top * .517);
-        // right: calc($M-top * )
-
-        border: 1px solid lime;
-        left: 50%;
-        transform: translate(-50%);
-
+        width: $M;
+        height: calc($M * .61);
         background-image: url('../styles/bird-images/M-top.png');
-        // right: 1px;
-        bottom: -1px !important
     }
     .M-bottom {
-        // width: $M-top;
-
-        width: 53px;
-        height: 32px;
+        width: calc($M * 1.17);
+        height: calc($M * .59);
         background-image: url('../styles/bird-images/M-bottom.png');
-        // right: -6px;
-
-        border: 1px solid lime;
-        left: 50%;
-        transform: translate(-50%);
     }
 
     .F-top {
-        width: 56px;
-        height: 24px;
+        width: $F;
+        height: calc($F * .429);
         background-image: url('../styles/bird-images/F-top.png');
-        right: 0px;
     }
     .F-bottom {
-        width: 46px;
-        height: 24px;
+        width: calc($F * .821);
+        height: calc($F * .429);
         background-image: url('../styles/bird-images/F-bottom.png');
-        right: -3px;
     }
 
     .C-top {
-        width: 49px;
-        height: 52px;
+        width: $C;
+        height: calc($C * 1.18);
         background-image: url('../styles/bird-images/C-top.png');
-        right: -1px;
     }
     .C-bottom {
-        width: 70px;
-        height: 53px;
+        width: calc($C * 1.84);
+        height: calc($C * 1.27);
         background-image: url('../styles/bird-images/C-bottom.png');
-        right: -2px;
     }
 
     .E-top {
-        width: 59px !important;
-        height: 35px !important;
+        width: $E;
+        height: calc($E * .413);
         background-image: url('../styles/bird-images/E-top.png');
-        right: 5px;
     }
     .E-bottom {
-        width: 36px;
-        height: 39px;
+        width: calc($E * .46);
+        height: calc($E * .473);
         background-image: url('../styles/bird-images/E-bottom.png');
-        right: 9px;
     }
 
     .H-top {
-        width: 49px;
-        height: 43px !important;
+        width: $H;
+        height: calc($H * .809);
         background-image: url('../styles/bird-images/H-top.png');
-        right: 6px;
     }
     .H-bottom {
-        width: 36px;
-        height: 20px;
+        width: calc($H * .944);
+        height: calc($H * .382);
         background-image: url('../styles/bird-images/H-bottom.png');
-        right: 12px;
     }
 
     .V-top {
-        width: 46px;
-        height: 40px;
+        width: $V;
+        height: calc($V * .637);
         background-image: url('../styles/bird-images/V-top.png');
-        left: -4px;
     }
     .V-bottom {
-        width: 69px;
-        height: 37px;
+        width: calc($V * 1.68);
+        height: calc($V * .657);
         background-image: url('../styles/bird-images/V-bottom.png');
-        right: 9px;
     }
 }
