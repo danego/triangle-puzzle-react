@@ -4,7 +4,7 @@ import FramelessSolutionsContext from "./frameless-solutions-context";
 import { Edge, Piece, Puzzle, TrackingArray } from "@/types";
 
 interface Props {
-    children: any;
+    children: React.ReactNode;
 }
 
 interface State {

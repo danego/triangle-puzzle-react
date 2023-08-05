@@ -12,13 +12,11 @@ import { controlsActions } from '../store/controls';
 const Controls = () => {
     const solutionsState = useAppSelector(state => state.solutions);
     const solutionsFramelessCtx = useContext(FramelessSolutionsContext);
+    const [selectedSolution, setSelectedSolution] = useState(SolutionTypes.default + '|' + '-1');
     const dispatch = useAppDispatch();
 
     const currentTriangleWidth = useAppSelector(state => state.sizing).triangleSize;
     const currentMarginRatio = useAppSelector(state => state.sizing).grabHandleMarginRatio;
-    const currentHandleTopRatio = useAppSelector(state => state.sizing).grabHandleTopRatio;
-    const currentHandleTopRatioOdd = useAppSelector(state => state.sizing).grabHandleTopRatioOdd;
-    const currentTriangleClassRightRatio = useAppSelector(state => state.sizing).triangleClassRightRatio;
 
     const borderToggleHandler = () => {
         dispatch(controlsActions.toggleBorders());
@@ -46,24 +44,10 @@ const Controls = () => {
         console.log(+event.target.value);
         dispatch(sizingActions.setTriangleSize(+event.target.value));
     };
-
     const grabHandleMarginHandler = (event: any) => {
         const difference = currentMarginRatio - +event.target.value;
         dispatch(sizingActions.increaseGrabHandleMargin(difference));
     };
-    const grabHandleTopHandler = (event: any) => {
-        const difference = +(currentHandleTopRatio - +event.target.value).toFixed(4);
-        dispatch(sizingActions.increaseGrabHandleTop(difference));
-    };
-    const grabHandleTopOddHandler = (event: any) => {
-        const difference = +(currentHandleTopRatioOdd - +event.target.value).toFixed(4);
-        dispatch(sizingActions.increaseGrabHandleTopOdd(difference));
-    };
-    const triangleClassRightHandler = (event: any) => {
-        const difference = +(currentTriangleClassRightRatio - +event.target.value).toFixed(4);
-        dispatch(sizingActions.increaseTriangleClassRightRatio(difference));
-    };
-
 
 
     return (
@@ -96,7 +80,6 @@ const Controls = () => {
             </select>
 
 
-
             {/* TEMPS */}
             <span>
                 <button onClick={decrementSizingHandler}> - </button>
@@ -111,35 +94,6 @@ const Controls = () => {
                     value={currentMarginRatio}
                     onChange={grabHandleMarginHandler} />
             </span>
-
-            <br />
-            <span>
-                <input
-                    type='number'
-                    style={{margin: 10, width: 80}}
-                    step={.001}
-                    value={currentHandleTopRatio}
-                    onChange={grabHandleTopHandler} />
-            </span>
-            <span>
-                <span>GH Top ODD</span>
-                <input
-                    type='number'
-                    style={{margin: 10, width: 80}}
-                    step={.0001}
-                    value={currentHandleTopRatioOdd}
-                    onChange={grabHandleTopOddHandler} />
-            </span>
-            <span>
-                <span>tri right</span>
-                <input
-                    type='number'
-                    style={{margin: 10, width: 80}}
-                    step={.0001}
-                    value={currentTriangleClassRightRatio}
-                    onChange={triangleClassRightHandler} />
-            </span>
-
         </div>
     );
 };

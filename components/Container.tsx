@@ -10,9 +10,18 @@ import { solutionsActions } from '../store/solutions';
 import { useAppDispatch } from '../store/hooks';
 import { SolutionTypes } from '../types';
 import SolutionsContext from '../store/solutions/solutions-context';
+import { sizingActions } from "../store/sizing";
 
 const Container = () => {
     const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(sizingActions.changeSize(window.innerWidth));
+
+        window.addEventListener('resize', () => {
+            dispatch(sizingActions.changeSize(window.innerWidth));
+        });
+    }, [dispatch]);
 
     // Move these higher up to root:
     const solutionsCtx = useContext(SolutionsContext);

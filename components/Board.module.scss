@@ -1,27 +1,9 @@
 .row {
     display: flex;
     justify-content: center;
+    position: relative;
 
-    // border: 1px dashed indianred;
-    // box-sizing: border-box;
-    height: 86.6px;
-    height: 173.2px;
-
-}
-
-.row:nth-child(1) {
-    position: relative;
-    top: -2px;
-}
-.row:nth-child(2) {
-    position: relative;
-    top: -1px;
-}
-.row:nth-child(3) {
-    position: relative;
-    top: -0.4px;
-}
-.row:nth-child(4) {
-    position: relative;
-    top: 1px;
+    &:nth-child(odd) {
+        position: relative;
+    }
 }
