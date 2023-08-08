@@ -328,7 +328,62 @@ const puzzle: Puzzle = {
                 half: 'top'
             },
         }
-    ]
+    ],
+    // frame by edges L -> R vs solving friendly format
+    frameBottom: [
+        {
+            type: 'H',
+            half: 'bottom'
+        },
+        {
+            type: 'M',
+            half: 'bottom'
+        },
+        {
+            type: 'C',
+            half: 'bottom'
+        },
+        {
+            type: 'M',
+            half: 'bottom'
+        }
+    ],
+    frameLeft: [
+        {
+            type: 'F',
+            half: 'top'
+        },
+        {
+            type: 'F',
+            half: 'bottom'
+        },
+        {
+            type: 'M',
+            half: 'bottom'
+        },
+        {
+            type: 'F',
+            half: 'bottom'
+        },
+    ],
+    frameRight: [
+        {
+            type: 'V',
+            half: 'bottom'
+        },
+        {
+            type: 'F',
+            half: 'top'
+        },
+        {
+            type: 'C',
+            half: 'top'
+        },
+        {
+            type: 'E',
+            half: 'top'
+        },
+    ],
 }
 
 export default puzzle;

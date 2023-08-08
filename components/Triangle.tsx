@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { actions as piecesActions } from '../store/pieces';
 import { TRIANGLE_CLASS_RIGHT_RATIO } from '../store/sizing';
 import { Piece } from '../types';
+import PieceEdge from './PieceEdge';
 
 interface TriangleProps {
     piece: Piece;
@@ -52,37 +53,27 @@ export default function Triangle(props: TriangleProps) {
                         left: sizing.triangleSize / -2,
                     }}>
                     {/* bottom 1  - go clockwise */}
-                    <div
-                        className={classes['overlay-edge']}
-                        style={{
-                            width: sizing.edgeSize,
-                            height: sizing.edgeSize,
-                            left: `calc(50% - ${sizing.edgeSize / 2}px)`
-                        }}>
-                        <div className={classes[`${props.piece.edge1.type + '-' + props.piece.edge1.half}`]}></div>
-                    </div>
 
+                    <PieceEdge
+                        side='bottom'
+                        edgeType={props.piece.edge1.type}
+                        edgeHalf={props.piece.edge1.half}
+                        edgeSize={sizing.edgeSize}
+                    />
                     {/* left 2 */}
-                    <div
-                        className={classes['overlay-edge']}
-                        style={{
-                            width: sizing.edgeSize,
-                            height: sizing.edgeSize,
-                            left: `calc(25% - ${sizing.edgeSize / 2}px)`
-                        }}>
-                        <div className={classes[`${props.piece.edge2.type + '-' + props.piece.edge2.half}`]}></div>
-                    </div>
-
+                    <PieceEdge
+                        side='left'
+                        edgeType={props.piece.edge2.type}
+                        edgeHalf={props.piece.edge2.half}
+                        edgeSize={sizing.edgeSize}
+                    />
                     {/* right / 3 */}
-                    <div
-                        className={classes['overlay-edge']}
-                        style={{
-                            width: sizing.edgeSize,
-                            height: sizing.edgeSize,
-                            right: `calc(25% - ${sizing.edgeSize / 2}px)`
-                        }}>
-                        <div className={classes[`${props.piece.edge3.type + '-' + props.piece.edge3.half}`]}></div>
-                    </div>
+                    <PieceEdge
+                        side='right'
+                        edgeType={props.piece.edge3.type}
+                        edgeHalf={props.piece.edge3.half}
+                        edgeSize={sizing.edgeSize}
+                    />
                 </div>
 
 

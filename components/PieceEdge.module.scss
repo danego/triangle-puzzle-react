@@ -1,0 +1,108 @@
+.overlay-edge {
+    position: absolute;
+    border-radius: 0;
+    text-align: center;
+    font-size: 14px;
+    user-select: none;
+
+    // bird specific images
+    & > div {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%);
+        background-size: contain;
+    }
+
+    // bottom
+    &:nth-child(1) {
+        bottom: 0;
+    }
+    // left
+    &:nth-child(2) {
+        transform: rotate(120deg);
+        transform-origin: bottom;
+        bottom: calc(50%);
+    }
+    // right
+    &:nth-child(3) {
+        transform: rotate(-120deg);
+        transform-origin: bottom;
+        bottom: 50%;
+    }
+}
+
+// = % base for all other M sizes - but also a % of triangle size
+// separate bird numbers (vs just writing %s in .M-top properties) means you can adjust entire relative bird sizes
+$M: 100%;
+$F: 112%;
+$C: 85%;
+$E: 150%;
+$H: 89%;
+$V: 102%;
+
+.M-top {
+    width: $M;
+    height: calc($M * .61);
+    background-image: url('../styles/bird-images/M-top.png');
+}
+.M-bottom {
+    width: calc($M * 1.17);
+    height: calc($M * .59);
+    background-image: url('../styles/bird-images/M-bottom.png');
+}
+
+.F-top {
+    width: $F;
+    height: calc($F * .429);
+    background-image: url('../styles/bird-images/F-top.png');
+}
+.F-bottom {
+    width: calc($F * .821);
+    height: calc($F * .429);
+    background-image: url('../styles/bird-images/F-bottom.png');
+}
+
+.C-top {
+    width: $C;
+    height: calc($C * 1.18);
+    background-image: url('../styles/bird-images/C-top.png');
+}
+.C-bottom {
+    width: calc($C * 1.84);
+    height: calc($C * 1.27);
+    background-image: url('../styles/bird-images/C-bottom.png');
+}
+
+.E-top {
+    width: $E;
+    height: calc($E * .413);
+    background-image: url('../styles/bird-images/E-top.png');
+}
+.E-bottom {
+    width: calc($E * .46);
+    height: calc($E * .473);
+    background-image: url('../styles/bird-images/E-bottom.png');
+}
+
+.H-top {
+    width: $H;
+    height: calc($H * .809);
+    background-image: url('../styles/bird-images/H-top.png');
+}
+.H-bottom {
+    width: calc($H * .944);
+    height: calc($H * .382);
+    background-image: url('../styles/bird-images/H-bottom.png');
+}
+
+.V-top {
+    width: $V;
+    height: calc($V * .637);
+    background-image: url('../styles/bird-images/V-top.png');
+}
+.V-bottom {
+    width: calc($V * 1.68);
+    height: calc($V * .657);
+    background-image: url('../styles/bird-images/V-bottom.png');
+}

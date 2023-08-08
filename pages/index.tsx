@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 
 import styles from '@/styles/Home.module.css'
 import Container from '../components/Container';
+import Controls from '../components/Controls';
 import SolutionsProvider from '@/store/solutions/SolutionsProvider';
 import FramelessSolutionsProvider from '@/store/solutions/FramelessSolutionsProvider';
 import store from '../store/store';
@@ -24,6 +25,7 @@ export default function Home() {
           <FramelessSolutionsProvider>
 
             <Container />
+            <Controls />
 
           </FramelessSolutionsProvider>
         </SolutionsProvider>

@@ -11,7 +11,7 @@ export const GRAB_HANDLE_TOP_RATIO_ODD = -.02;
 export const TRIANGLE_CLASS_RIGHT_RATIO = -.2145;
 
 
-interface SizingState {
+export interface SizingState {
     screenWidth: number;
     triangleSize: number;  // = triangle side
     triangleHeight: number;
@@ -20,6 +20,9 @@ interface SizingState {
     boardRowsTop: { [key: string]: number };
     pieceBorderHeight: number;
     grabHandleMarginRatio: number;  // meshing factor
+
+    frameWidth: number; // 806
+    frameHeight: number; //75
 }
 
 const initialState: SizingState = {
@@ -36,6 +39,9 @@ const initialState: SizingState = {
     },
     pieceBorderHeight: 2,
     grabHandleMarginRatio: -.0372,
+
+    frameWidth: 806, // should be tied into meshing factor
+    frameHeight: 75, // should be dynamic eventually
 };
 
 const sizingSlice = createSlice({

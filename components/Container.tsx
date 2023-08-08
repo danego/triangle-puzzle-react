@@ -4,7 +4,6 @@ import classes from './Container.module.scss';
 import puzzleBirds from '../birds';
 import FramelessSolutionsContext from "@/store/solutions/frameless-solutions-context";
 import Board from './Board';
-import Controls from './Controls';
 import Frame from './Frame';
 import { solutionsActions } from '../store/solutions';
 import { useAppDispatch } from '../store/hooks';
@@ -45,7 +44,6 @@ const Container = () => {
         <div className={classes.container}>
             <Board />
             <Frame />
-            <Controls />
         </div>
     );
 };

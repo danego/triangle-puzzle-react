@@ -1,6 +1,10 @@
 export interface Puzzle {
     frame: FramePiece[];
     pieces: Piece[];
+
+    frameBottom?: any[];
+    frameLeft?: any[];
+    frameRight?: any[];
 };
 
 export interface Piece {
@@ -16,7 +20,7 @@ interface FramePiece {
     edge3?: Edge;
 }
 
-type Half = 'top' | 'bottom';
+export type Half = 'top' | 'bottom';
 export interface Edge {
     type: string,
     half: Half
@@ -33,3 +37,6 @@ export enum SolutionTypes {
     framed = 'Framed',
     frameless = 'Frameless'
 }
+
+// Non-Solving Process Types
+export type PieceEdgeLocation = 'bottom' | 'left' | 'right' | 'frame';
