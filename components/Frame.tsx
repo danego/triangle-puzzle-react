@@ -16,7 +16,7 @@ const Frame = () => {
             style={{
                 width: sizing.frameWidth,
                 height: sizing.frameHeight,
-                bottom: 1
+                bottom: sizing.frameEdgeBottomPositionBottom
             }}>
             {frameEdgesBottom.map((edge, i) => {
                 return (
@@ -37,8 +37,8 @@ const Frame = () => {
             style={{
                 width: sizing.frameWidth,
                 height: sizing.frameHeight,
-                right: sizing.triangleSize + 2,
-                bottom: sizing.triangleHeight * 2 + sizing.frameHeight + 2,
+                right: sizing.frameEdgeLeftPosition,
+                bottom: sizing.frameEdgeLRPositionBottom
             }}>
             {frameEdgesLeft.map((edge, i) => {
                 return (
@@ -59,8 +59,8 @@ const Frame = () => {
             style={{
                 width: sizing.frameWidth,
                 height: sizing.frameHeight,
-                left: sizing.triangleSize + 2,
-                bottom: sizing.triangleHeight * 2 + sizing.frameHeight + 2,
+                left: sizing.frameEdgeRightPosition,
+                bottom: sizing.frameEdgeLRPositionBottom
             }}>
             {frameEdgesRight.map((edge, i) => {
                 return (

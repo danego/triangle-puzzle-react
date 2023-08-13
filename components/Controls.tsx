@@ -32,16 +32,7 @@ const Controls = () => {
         }));
     };
 
-
-    // TEMPS
-    const decrementSizingHandler = () => {
-        dispatch(sizingActions.decrement());
-    };
-    const incrementSizingHandler = () => {
-        dispatch(sizingActions.increment());
-    };
     const numInputChangeHandler = (event: any) => {
-        console.log(+event.target.value);
         dispatch(sizingActions.setTriangleSize(+event.target.value));
     };
     const grabHandleMarginHandler = (event: any) => {
@@ -79,12 +70,8 @@ const Controls = () => {
                 </optgroup>
             </select>
 
-
-            {/* TEMPS */}
             <span>
-                <button onClick={decrementSizingHandler}> - </button>
                 <input type='number' style={{margin: 10, width: 50}} value={currentTriangleWidth} onChange={numInputChangeHandler} />
-                <button onClick={incrementSizingHandler}> + </button>
             </span>
             <span>
                 <input

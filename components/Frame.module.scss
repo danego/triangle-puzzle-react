@@ -4,13 +4,12 @@
     display: flex;
     position: relative;
 
+    // .overlay-edge container
     > div {
         flex-grow: 1;
         display: flex;
         justify-content: center;
         transform: rotate(180deg);
-
-        border: 1px solid brown;
     }
 }
 .frameEdgeLeft {
