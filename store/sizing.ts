@@ -1,12 +1,13 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 
-const STARTING_TRIANGLE_SIZE = 201;
+// starting size should be delayed or 0 to prevent pop/slide in
+const STARTING_TRIANGLE_SIZE = 101;
 const HEIGHT_TO_TRIANGLE_RATIO = .866;
 const TRIANGLE_INNER_CIRCLE_DIAMETER = .577;
 const EDGE_TO_TRIANGLE_RATIO = 1/4;
 const FRAME_SIZE_INCREASE_RATIO = 1.008;
 const FRAME_HEIGHT_TO_TRIANGLE_RATIO = 3/8;
-const FRAME_POSITION_ADJUSTMENT_RATIO = .003;
+const FRAME_POSITION_ADJUSTMENT_RATIO = .0027;
 // Spacing / Margin
 export const GRAB_HANDLE_TOP_RATIO = .269;
 export const GRAB_HANDLE_TOP_RATIO_ODD = -.02;
@@ -60,8 +61,6 @@ const sizingSlice = createSlice({
     reducers: {
         changeSize(state, action: PayloadAction<number>) {
             state.screenWidth = action.payload;
-            // calculate triangle size based on space available / 7
-            // state.triangleSize += 5;
         },
         // create function for updating all vars - or make triangleSize a getter
         setTriangleSize(state, action: PayloadAction<number>) {
@@ -85,3 +84,17 @@ const sizingSlice = createSlice({
 
 export default sizingSlice.reducer;
 export const sizingActions = sizingSlice.actions;
+
+
+export const changeSize = () => {
+    return (dispatch: Dispatch<any>) => {
+        const maximumTriangleSizeByWidth = window.innerWidth / 5;
+        const maximumTriangleSizeByHeight = window.innerHeight / HEIGHT_TO_TRIANGLE_RATIO / 5;
+
+        let maximumTriangleSize = maximumTriangleSizeByWidth < maximumTriangleSizeByHeight ? maximumTriangleSizeByWidth : maximumTriangleSizeByHeight;
+        maximumTriangleSize = Math.floor(maximumTriangleSize);
+        if (maximumTriangleSize % 2 === 0) maximumTriangleSize -= 1;
+
+        dispatch(sizingActions.setTriangleSize(maximumTriangleSize));
+    };
+}

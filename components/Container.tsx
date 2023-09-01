@@ -9,18 +9,32 @@ import { solutionsActions } from '../store/solutions';
 import { useAppDispatch } from '../store/hooks';
 import { SolutionTypes } from '../types';
 import SolutionsContext from '../store/solutions/solutions-context';
-import { sizingActions } from "../store/sizing";
+import { changeSize, sizingActions } from "../store/sizing";
+
+const DEBOUNCE_TIME = 500;
 
 const Container = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(sizingActions.changeSize(window.innerWidth));
-
-        window.addEventListener('resize', () => {
+        function handleResize() {
             dispatch(sizingActions.changeSize(window.innerWidth));
+            dispatch(changeSize());
+        }
+        handleResize();
+
+        let timer: ReturnType<typeof setTimeout>;
+        window.addEventListener('resize', () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                handleResize();
+            }, DEBOUNCE_TIME);
         });
-    }, [dispatch]);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [dispatch]);dispatch
 
     // Move these higher up to root:
     const solutionsCtx = useContext(SolutionsContext);
