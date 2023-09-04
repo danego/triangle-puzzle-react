@@ -16,7 +16,7 @@ const Controls = () => {
     const dispatch = useAppDispatch();
 
     const currentTriangleWidth = useAppSelector(state => state.sizing).triangleSize;
-    const currentMarginRatio = useAppSelector(state => state.sizing).grabHandleMarginRatio;
+    const meshingFactor = useAppSelector(state => state.sizing).meshingFactor;
 
     const borderToggleHandler = () => {
         dispatch(controlsActions.toggleBorders());
@@ -36,8 +36,8 @@ const Controls = () => {
         dispatch(sizingActions.setTriangleSize(+event.target.value));
     };
     const grabHandleMarginHandler = (event: any) => {
-        const difference = currentMarginRatio - +event.target.value;
-        dispatch(sizingActions.increaseGrabHandleMargin(difference));
+        if (+event.target.value > 5 || +event.target.value < -5) event.target.value = 1;
+        dispatch(sizingActions.increaseMeshingFactor(+event.target.value));
     };
 
 
@@ -74,11 +74,15 @@ const Controls = () => {
                 <input type='number' style={{margin: 10, width: 50}} value={currentTriangleWidth} onChange={numInputChangeHandler} />
             </span>
             <span>
+                <label htmlFor="meshing-factor">Meshing Factor</label>
                 <input
                     type='number'
                     style={{margin: 10, width: 80}}
-                    step={.0001}
-                    value={currentMarginRatio}
+                    name="meshing-factor"
+                    step={.1}
+                    max="5"
+                    min="-5"
+                    value={meshingFactor}
                     onChange={grabHandleMarginHandler} />
             </span>
         </div>
