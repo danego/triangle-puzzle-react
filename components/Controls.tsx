@@ -15,11 +15,17 @@ const Controls = () => {
     const [selectedSolution, setSelectedSolution] = useState(SolutionTypes.default + '|' + '-1');
     const dispatch = useAppDispatch();
 
-    const currentTriangleWidth = useAppSelector(state => state.sizing).triangleSize;
-    const meshingFactor = useAppSelector(state => state.sizing).meshingFactor;
+    const sizing = useAppSelector(state => state.sizing);
+    const controls = useAppSelector(state => state.controls);
 
     const borderToggleHandler = () => {
         dispatch(controlsActions.toggleBorders());
+    };
+    const frameToggleHandler = () => {
+        dispatch(controlsActions.toggleFrame());
+    };
+    const pieceIdToggleHandler = () => {
+        dispatch(controlsActions.togglePieceIds());
     };
 
     const loadSolutionHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -47,7 +53,15 @@ const Controls = () => {
                 re-run solutions
             </button>
 
-            <button onClick={borderToggleHandler}>Toggle Spot Borders</button>
+            <button onClick={borderToggleHandler}>
+                { controls.borders ? 'Hide Borders' : 'Show Borders' }
+            </button>
+            <button onClick={frameToggleHandler}>
+                { controls.frame ? 'Hide Frame' : 'Show Frame' }
+            </button>
+            <button onClick={pieceIdToggleHandler}>
+                { controls.pieceIds ? 'Hide Piece IDs' : 'Show Piece IDs' }
+            </button>
 
             <select id="solutions" onChange={loadSolutionHandler} value={selectedSolution}>
                 <optgroup label="Default">
@@ -71,7 +85,7 @@ const Controls = () => {
             </select>
 
             <span>
-                <input type='number' style={{margin: 10, width: 50}} value={currentTriangleWidth} onChange={numInputChangeHandler} />
+                <input type='number' style={{margin: 10, width: 50}} value={sizing.triangleSize} onChange={numInputChangeHandler} />
             </span>
             <span>
                 <label htmlFor="meshing-factor">Meshing Factor</label>
@@ -82,7 +96,7 @@ const Controls = () => {
                     step={.1}
                     max="5"
                     min="-5"
-                    value={meshingFactor}
+                    value={sizing.meshingFactor}
                     onChange={grabHandleMarginHandler} />
             </span>
         </div>

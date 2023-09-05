@@ -3,12 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 interface ControlsState {
     borders: boolean;
     frame: boolean;
+    pieceIds: boolean;
 }
 
 const initialState: ControlsState = {
     borders: true,
-    // pieceIds,
-    frame: true
+    frame: true,
+    pieceIds: true,
 };
 
 const controls = createSlice({
@@ -20,6 +21,9 @@ const controls = createSlice({
         },
         toggleFrame(state) {
             state.frame = !state.frame;
+        },
+        togglePieceIds(state) {
+            state.pieceIds = !state.pieceIds;
         }
     }
 });

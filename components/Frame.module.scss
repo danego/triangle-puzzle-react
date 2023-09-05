@@ -11,6 +11,17 @@
         justify-content: center;
         transform: rotate(180deg);
     }
+
+    &.fade-out {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s ease-in 500ms, opacity ease-in 500ms;
+    }
+    &.fade-in {
+        visibility: visible;
+        opacity: 100;
+        transition: visibility 0s ease-out, opacity ease-out 500ms;
+    }
 }
 .frameEdgeLeft {
     clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);

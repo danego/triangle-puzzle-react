@@ -5,6 +5,11 @@ import puzzle from '../birds';
 
 const Frame = () => {
     const sizing = useAppSelector(state => state.sizing);
+    const showFrame = useAppSelector(state => state.controls.frame);
+
+    const frameVisibilityClasses = showFrame ?
+        [classes.frameEdge, classes['fade-in']].join(' ') :
+        [classes.frameEdge, classes['fade-out']].join(' ');
 
     const frameEdgesBottom = puzzle.frameBottom!;
     const frameEdgesLeft = puzzle.frameLeft!;
@@ -12,7 +17,7 @@ const Frame = () => {
 
     return <>
         <div
-            className={classes.frameEdge}
+            className={frameVisibilityClasses}
             style={{
                 width: sizing.frameWidth,
                 height: sizing.frameHeight,
@@ -33,7 +38,7 @@ const Frame = () => {
         </div>
 
         <div
-            className={[classes.frameEdge, classes.frameEdgeLeft].join(' ')}
+            className={frameVisibilityClasses + ' ' + classes.frameEdgeLeft}
             style={{
                 width: sizing.frameWidth,
                 height: sizing.frameHeight,
@@ -55,7 +60,7 @@ const Frame = () => {
         </div>
 
         <div
-            className={[classes.frameEdge, classes.frameEdgeRight].join(' ')}
+            className={frameVisibilityClasses + ' ' + classes.frameEdgeRight}
             style={{
                 width: sizing.frameWidth,
                 height: sizing.frameHeight,

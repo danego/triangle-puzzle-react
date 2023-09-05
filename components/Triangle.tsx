@@ -14,6 +14,7 @@ interface TriangleProps {
 export default function Triangle(props: TriangleProps) {
     const rotation = useAppSelector(state => state.pieces.board['spot' + props.spotId].rotation);
     const sizing = useAppSelector(state => state.sizing);
+    const showIds = useAppSelector(state => state.controls.pieceIds);
     const dispatch = useAppDispatch();
 
     let rotationDegrees = props.odd ? 180 : 0;
@@ -33,7 +34,7 @@ export default function Triangle(props: TriangleProps) {
             style={{ width: sizing.grabHandleDiameter, height: sizing.grabHandleDiameter }}
             onClick={rotateHandler}>
 
-            <span className={classes['piece-id']}>{props.piece.id}</span>
+            { showIds && <span className={classes['piece-id']}>{props.piece.id}</span>}
 
             <div
                 className={classes.triangle}
