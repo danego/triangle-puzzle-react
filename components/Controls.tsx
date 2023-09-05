@@ -11,11 +11,10 @@ import { controlsActions } from '../store/controls';
 
 const Controls = () => {
     const solutionsState = useAppSelector(state => state.solutions);
-    const solutionsFramelessCtx = useContext(FramelessSolutionsContext);
     const [selectedSolution, setSelectedSolution] = useState(SolutionTypes.default + '|' + '-1');
     const dispatch = useAppDispatch();
 
-    const sizing = useAppSelector(state => state.sizing);
+    const meshingFactor = useAppSelector(state => state.sizing.meshingFactor);
     const controls = useAppSelector(state => state.controls);
 
     const borderToggleHandler = () => {
@@ -38,9 +37,6 @@ const Controls = () => {
         }));
     };
 
-    const numInputChangeHandler = (event: any) => {
-        dispatch(sizingActions.setTriangleSize(+event.target.value));
-    };
     const grabHandleMarginHandler = (event: any) => {
         if (+event.target.value > 5 || +event.target.value < -5) event.target.value = 1;
         dispatch(sizingActions.increaseMeshingFactor(+event.target.value));
@@ -48,47 +44,49 @@ const Controls = () => {
 
 
     return (
-        <div className={classes.buttons}>
-            <button onClick={solutionsFramelessCtx.findSolutions.bind(this, puzzleBirds)}>
-                re-run solutions
-            </button>
-
-            <button onClick={borderToggleHandler}>
+        <div className={classes.panel}>
+            <button onClick={borderToggleHandler} className={classes.pill} title="Toggle borders between piece spots">
                 { controls.borders ? 'Hide Borders' : 'Show Borders' }
             </button>
-            <button onClick={frameToggleHandler}>
+            <button onClick={frameToggleHandler} className={classes.pill} title="Toggle frame to match solution type">
                 { controls.frame ? 'Hide Frame' : 'Show Frame' }
             </button>
-            <button onClick={pieceIdToggleHandler}>
+            <button onClick={pieceIdToggleHandler} className={classes.pill} title="Toggle visible IDs on pieces">
                 { controls.pieceIds ? 'Hide Piece IDs' : 'Show Piece IDs' }
             </button>
 
-            <select id="solutions" onChange={loadSolutionHandler} value={selectedSolution}>
-                <optgroup label="Default">
-                    <option value={SolutionTypes.default + '|' + '-1'}>Empty</option>
-                    <option value={SolutionTypes.default + '|' + '0'}>SEQ</option>
-                </optgroup>
-
-                <optgroup label="Framed">
-                    {solutionsState.allSolutionsFramed.map((soln, i) => {
-                        return <option value={SolutionTypes.framed + '|' + i}  key={i}>{i}</option>
-                    })}
-                </optgroup>
-
-                <optgroup label="Frameless">
-                    {solutionsState.allSolutionsFrameless.map((soln, i) => {
-                        return <option value={SolutionTypes.frameless + '|' + i} key={i}>
-                            {i}
-                        </option>;
-                    })}
-                </optgroup>
-            </select>
-
             <span>
-                <input type='number' style={{margin: 10, width: 50}} value={sizing.triangleSize} onChange={numInputChangeHandler} />
+                <label htmlFor='solutions'>Solution #:</label>
+                <select
+                    id="solutions"
+                    name="solutions"
+                    className={classes.pill}
+                    title="Load all pieces or a specific solution"
+                    onChange={loadSolutionHandler}
+                    value={selectedSolution} >
+                    <optgroup label="Default">
+                        <option value={SolutionTypes.default + '|' + '-1'}>Empty</option>
+                        <option value={SolutionTypes.default + '|' + '0'}>SEQ</option>
+                    </optgroup>
+
+                    <optgroup label="Framed">
+                        {solutionsState.allSolutionsFramed.map((soln, i) => {
+                            return <option value={SolutionTypes.framed + '|' + i}  key={i}>{i}</option>
+                        })}
+                    </optgroup>
+
+                    <optgroup label="Frameless">
+                        {solutionsState.allSolutionsFrameless.map((soln, i) => {
+                            return <option value={SolutionTypes.frameless + '|' + i} key={i}>
+                                {i}
+                            </option>;
+                        })}
+                    </optgroup>
+                </select>
             </span>
+
             <span>
-                <label htmlFor="meshing-factor">Meshing Factor</label>
+                <label htmlFor="meshing-factor">Meshing Factor:</label>
                 <input
                     type='number'
                     style={{margin: 10, width: 80}}
@@ -96,7 +94,9 @@ const Controls = () => {
                     step={.1}
                     max="5"
                     min="-5"
-                    value={sizing.meshingFactor}
+                    className={classes.pill}
+                    title="Fine tune the space between pieces"
+                    value={meshingFactor}
                     onChange={grabHandleMarginHandler} />
             </span>
         </div>

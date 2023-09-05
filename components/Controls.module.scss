@@ -1,6 +1,53 @@
-.buttons {
-    > button, select {
-        margin-top: 20px;
-        margin: 20px;
+.panel {
+    box-sizing: border-box;
+    margin: 20px 10px;
+    padding: 10px 0px;
+    background-color: #fcfaf5;
+    // background-color: whitesmoke;
+    border: 1px solid #222222;
+    border-radius: 30px;
+    box-shadow: 1px 1px cadetblue;
+    color: black;
+    font-size: 16px !important;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+    font-family: sans-serif !important;
+
+    & > * {
+        margin: 0px 3px;
+    }
+
+    .pill {
+        margin: 6px;
+        padding: 10px;
+        border: 1px solid #222222;
+        border-radius: 30px;
+        color: black;
+        background-color: #efefef;
+        cursor: pointer;
+        font-family: sans-serif;
+        font-size: 14px;
+        -webkit-appearance: none;
+    }
+
+    button:focus, input:focus, select:focus {
+        outline: none;
+    }
+    button:hover {
+        background-color: #c5c5c5;
+    }
+    button:active {
+        border: 1px solid rgba(255,64,129);
+        background-color: rgba(255, 64, 129, 0.2);
+    }
+
+    select {
+        background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+        background-repeat: no-repeat;
+        background-position-x: 95%;
+        background-position-y: 50%;
+        height: 38px;
     }
 }
