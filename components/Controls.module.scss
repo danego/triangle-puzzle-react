@@ -32,6 +32,16 @@
         -webkit-appearance: none;
     }
 
+    button.borders {
+        min-width: 110px;
+    }
+    button.frame {
+        min-width: 102px;
+    }
+    button.pieceIds {
+        min-width: 122px;
+    }
+
     button:focus, input:focus, select:focus {
         outline: none;
     }

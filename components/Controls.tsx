@@ -45,13 +45,13 @@ const Controls = () => {
 
     return (
         <div className={classes.panel}>
-            <button onClick={borderToggleHandler} className={classes.pill} title="Toggle borders between piece spots">
+            <button onClick={borderToggleHandler} className={[classes.pill, classes.borders].join(' ')} title="Toggle borders between piece spots">
                 { controls.borders ? 'Hide Borders' : 'Show Borders' }
             </button>
-            <button onClick={frameToggleHandler} className={classes.pill} title="Toggle frame to match solution type">
+            <button onClick={frameToggleHandler} className={[classes.pill, classes.frame].join(' ')} title="Toggle frame to match solution type">
                 { controls.frame ? 'Hide Frame' : 'Show Frame' }
             </button>
-            <button onClick={pieceIdToggleHandler} className={classes.pill} title="Toggle visible IDs on pieces">
+            <button onClick={pieceIdToggleHandler} className={[classes.pill, classes.pieceIds].join(' ')} title="Toggle visible IDs on pieces">
                 { controls.pieceIds ? 'Hide Piece IDs' : 'Show Piece IDs' }
             </button>
 
