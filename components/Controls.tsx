@@ -44,61 +44,72 @@ const Controls = () => {
 
 
     return (
-        <div className={classes.panel}>
-            <button onClick={borderToggleHandler} className={[classes.pill, classes.borders].join(' ')} title="Toggle borders between piece spots">
-                { controls.borders ? 'Hide Borders' : 'Show Borders' }
-            </button>
-            <button onClick={frameToggleHandler} className={[classes.pill, classes.frame].join(' ')} title="Toggle frame to match solution type">
-                { controls.frame ? 'Hide Frame' : 'Show Frame' }
-            </button>
-            <button onClick={pieceIdToggleHandler} className={[classes.pill, classes.pieceIds].join(' ')} title="Toggle visible IDs on pieces">
-                { controls.pieceIds ? 'Hide Piece IDs' : 'Show Piece IDs' }
-            </button>
+        <div className={classes.panel + ' panel'}>
+            <section className={classes.panelRow}>
+                <button onClick={borderToggleHandler} className={[classes.pill, classes.borders].join(' ')} title="Toggle borders between piece spots">
+                    { controls.borders ? 'Hide Borders' : 'Show Borders' }
+                </button>
+                <button onClick={frameToggleHandler} className={[classes.pill, classes.frame].join(' ')} title="Toggle frame to match solution type">
+                    { controls.frame ? 'Hide Frame' : 'Show Frame' }
+                </button>
+                <button onClick={pieceIdToggleHandler} className={[classes.pill, classes.pieceIds].join(' ')} title="Toggle visible IDs on pieces">
+                    { controls.pieceIds ? 'Hide Piece IDs' : 'Show Piece IDs' }
+                </button>
 
-            <span>
-                <label htmlFor='solutions'>Solution #:</label>
-                <select
-                    id="solutions"
-                    name="solutions"
-                    className={classes.pill}
-                    title="Load all pieces or a specific solution"
-                    onChange={loadSolutionHandler}
-                    value={selectedSolution} >
-                    <optgroup label="Default">
-                        <option value={SolutionTypes.default + '|' + '-1'}>Empty</option>
-                        <option value={SolutionTypes.default + '|' + '0'}>SEQ</option>
-                    </optgroup>
+                <span>
+                    <label htmlFor='solutions'>Solution #:</label>
+                    <select
+                        id="solutions"
+                        name="solutions"
+                        className={classes.pill}
+                        title="Load all pieces or a specific solution"
+                        onChange={loadSolutionHandler}
+                        value={selectedSolution} >
+                        <optgroup label="Default">
+                            <option value={SolutionTypes.default + '|' + '-1'}>Empty</option>
+                            <option value={SolutionTypes.default + '|' + '0'}>SEQ</option>
+                        </optgroup>
 
-                    <optgroup label="Framed">
-                        {solutionsState.allSolutionsFramed.map((soln, i) => {
-                            return <option value={SolutionTypes.framed + '|' + i}  key={i}>{i}</option>
-                        })}
-                    </optgroup>
+                        <optgroup label="Framed">
+                            {solutionsState.allSolutionsFramed.map((soln, i) => {
+                                return <option value={SolutionTypes.framed + '|' + i}  key={i}>{i}</option>
+                            })}
+                        </optgroup>
 
-                    <optgroup label="Frameless">
-                        {solutionsState.allSolutionsFrameless.map((soln, i) => {
-                            return <option value={SolutionTypes.frameless + '|' + i} key={i}>
-                                {i}
-                            </option>;
-                        })}
-                    </optgroup>
-                </select>
-            </span>
+                        <optgroup label="Frameless">
+                            {solutionsState.allSolutionsFrameless.map((soln, i) => {
+                                return <option value={SolutionTypes.frameless + '|' + i} key={i}>
+                                    {i}
+                                </option>;
+                            })}
+                        </optgroup>
+                    </select>
+                </span>
 
-            <span>
-                <label htmlFor="meshing-factor">Meshing Factor:</label>
-                <input
-                    type='number'
-                    style={{margin: 10, width: 80}}
-                    name="meshing-factor"
-                    step={.1}
-                    max="5"
-                    min="-5"
-                    className={classes.pill}
-                    title="Fine tune the space between pieces"
-                    value={meshingFactor}
-                    onChange={grabHandleMarginHandler} />
-            </span>
+                <span>
+                    <label htmlFor="meshing-factor">Meshing Factor:</label>
+                    <input
+                        type='number'
+                        style={{margin: 10, width: 80}}
+                        name="meshing-factor"
+                        step={.1}
+                        max="5"
+                        min="-5"
+                        className={classes.pill}
+                        title="Fine tune the space between pieces"
+                        value={meshingFactor}
+                        onChange={grabHandleMarginHandler} />
+                </span>
+            </section>
+
+            <section className={classes.description}>
+                <p>
+                    This app is based on the Triazzle puzzle by the DaMert Company. Choose different solutions to view. There is only one solution that matches the frame but many more frameless solutions.
+                </p>
+                <p>
+                    Click on individual pieces to rotate them in place.
+                </p>
+            </section>
         </div>
     );
 };

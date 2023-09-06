@@ -1,23 +1,31 @@
 .panel {
-    box-sizing: border-box;
-    margin: 20px 10px;
-    padding: 10px 0px;
-    background-color: #fcfaf5;
-    // background-color: whitesmoke;
-    border: 1px solid #222222;
-    border-radius: 30px;
-    box-shadow: 1px 1px cadetblue;
-    color: black;
-    font-size: 16px !important;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    align-items: center;
-    font-family: sans-serif !important;
+    // box-sizing: border-box;
+    // margin: 20px 10px;
+    // padding: 10px 0px;
+    // background-color: #fcfaf5;
+    // // background-color: whitesmoke;
+    // border: 1px solid #222222;
+    // border-radius: 30px;
+    // box-shadow: 1px 1px cadetblue;
+    // color: black;
+    // font-size: 16px !important;
+    // display: flex;
+    // justify-content: space-around;
+    // flex-wrap: wrap;
+    // align-items: center;
+    // font-family: sans-serif !important;
 
-    & > * {
-        margin: 0px 3px;
+    .panelRow {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        align-items: center;
+
+        & > * {
+            margin: 0px 3px;
+        }
     }
+
 
     .pill {
         margin: 6px;
@@ -59,5 +67,9 @@
         background-position-x: 95%;
         background-position-y: 50%;
         height: 38px;
+    }
+
+    .description {
+        padding: 6px;
     }
 }
