@@ -8,8 +8,8 @@ const Frame = () => {
     const showFrame = useAppSelector(state => state.controls.frame);
 
     const frameVisibilityClasses = showFrame ?
-        [classes.frameEdge, classes['fade-in']].join(' ') :
-        [classes.frameEdge, classes['fade-out']].join(' ');
+        [classes.frameEdge, classes['fade-in']] :
+        [classes.frameEdge, classes['fade-out']];
 
     const frameEdgesBottom = puzzle.frameBottom!;
     const frameEdgesLeft = puzzle.frameLeft!;
@@ -17,7 +17,7 @@ const Frame = () => {
 
     return <>
         <div
-            className={frameVisibilityClasses}
+            className={frameVisibilityClasses.join(' ')}
             style={{
                 width: sizing.frameWidth,
                 height: sizing.frameHeight,
@@ -38,7 +38,7 @@ const Frame = () => {
         </div>
 
         <div
-            className={frameVisibilityClasses + ' ' + classes.frameEdgeLeft}
+            className={[...frameVisibilityClasses, classes.frameEdgeSide, classes.frameEdgeLeft].join(' ')}
             style={{
                 width: sizing.frameWidth,
                 height: sizing.frameHeight,
@@ -60,7 +60,7 @@ const Frame = () => {
         </div>
 
         <div
-            className={frameVisibilityClasses + ' ' + classes.frameEdgeRight}
+            className={[...frameVisibilityClasses, classes.frameEdgeSide, classes.frameEdgeRight].join(' ')}
             style={{
                 width: sizing.frameWidth,
                 height: sizing.frameHeight,

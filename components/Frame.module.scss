@@ -23,9 +23,8 @@
         transition: visibility 0s ease-out, opacity ease-out 500ms;
     }
 }
-.frameEdgeLeft {
+.frameEdgeSide {
     clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
-    rotate: -60deg;
     transform-origin: bottom center;
     align-items: end;
     position: absolute;
@@ -34,14 +33,9 @@
         transform: rotate(0deg);
     }
 }
+.frameEdgeLeft {
+    rotate: -60deg;
+}
 .frameEdgeRight {
-    clip-path: polygon(10% 0, 90% 0, 100% 100%, 0 100%);
     rotate: 60deg;
-    transform-origin: bottom center;
-    position: absolute;
-    align-items: end;
-
-    > div {
-        transform: rotate(0deg);
-    }
 }
