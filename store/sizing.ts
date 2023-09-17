@@ -22,6 +22,7 @@ export interface SizingState {
     edgeSize: number;
     boardRowsTop: { [key: string]: number };
     pieceBorderHeight: number;
+    frameBorderHeight: number;
     grabHandleMarginRatio: number;
     meshingFactor: number;
     frameWidth: number;
@@ -45,6 +46,7 @@ const initialState: SizingState = {
         child4: 1
     },
     pieceBorderHeight: 2,
+    frameBorderHeight: 4,
     grabHandleMarginRatio: STARTING_GRAB_HANDLE_MARGIN_RATIO,
     meshingFactor: 1,
     frameWidth: +(STARTING_TRIANGLE_SIZE * 4 * FRAME_SIZE_INCREASE_RATIO).toFixed(0),

@@ -5,7 +5,7 @@
     position: relative;
 
     // .overlay-edge container
-    > div {
+    .pieceEdgeContainer {
         flex-grow: 1;
         display: flex;
         justify-content: center;
@@ -29,7 +29,7 @@
     align-items: end;
     position: absolute;
 
-    > div {
+    .pieceEdgeContainer {
         transform: rotate(0deg);
     }
 }
@@ -38,4 +38,18 @@
 }
 .frameEdgeRight {
     rotate: 60deg;
+}
+
+.border {
+    content: '';
+    position: absolute;
+    transform-origin: top center;
+    z-index: -10;
+
+    &.borderLeft {
+        rotate: -60deg;
+    }
+    &.borderRight {
+        rotate: 60deg;
+    }
 }

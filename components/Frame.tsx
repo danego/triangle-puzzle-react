@@ -6,6 +6,7 @@ import puzzle from '../birds';
 const Frame = () => {
     const sizing = useAppSelector(state => state.sizing);
     const showFrame = useAppSelector(state => state.controls.frame);
+    const showBorders = useAppSelector(state => state.controls).borders;
 
     const frameVisibilityClasses = showFrame ?
         [classes.frameEdge, classes['fade-in']] :
@@ -25,7 +26,7 @@ const Frame = () => {
             }}>
             {frameEdgesBottom.map((edge, i) => {
                 return (
-                    <div style={{ height: sizing.edgeSize }} key={i} >
+                    <div style={{ height: sizing.edgeSize }} key={i} className={classes.pieceEdgeContainer}>
                         <PieceEdge
                             side='frame'
                             edgeType={edge.type}
@@ -35,6 +36,14 @@ const Frame = () => {
                     </div>
                 );
             })}
+        </div>
+        <div className={classes.border}
+            style={{
+                width: sizing.frameWidth,
+                height: sizing.frameBorderHeight,
+                bottom: sizing.frameEdgeBottomPositionBottom + sizing.frameHeight,
+                background: showBorders ? 'rgba(135, 206, 235, 1)' : 'none',  // skyblue
+            }}>
         </div>
 
         <div
@@ -47,7 +56,7 @@ const Frame = () => {
             }}>
             {frameEdgesLeft.map((edge, i) => {
                 return (
-                    <div style={{ height: sizing.edgeSize }} key={i} >
+                    <div style={{ height: sizing.edgeSize }} key={i} className={classes.pieceEdgeContainer}>
                         <PieceEdge
                             side='frame'
                             edgeType={edge.type}
@@ -57,6 +66,15 @@ const Frame = () => {
                     </div>
                 );
             })}
+        </div>
+        <div className={[classes.border, classes.borderLeft].join(' ')}
+            style={{
+                width: sizing.frameWidth,
+                height: sizing.frameBorderHeight,
+                right: sizing.frameEdgeLeftPosition,
+                bottom: sizing.frameEdgeLRPositionBottom - sizing.frameBorderHeight,
+                background: showBorders ? 'rgba(135, 206, 235, 1)' : 'none',  // skyblue
+            }}>
         </div>
 
         <div
@@ -69,7 +87,7 @@ const Frame = () => {
             }}>
             {frameEdgesRight.map((edge, i) => {
                 return (
-                    <div style={{ height: sizing.edgeSize }} key={i} >
+                    <div style={{ height: sizing.edgeSize }} key={i} className={classes.pieceEdgeContainer}>
                         <PieceEdge
                             side='frame'
                             edgeType={edge.type}
@@ -79,6 +97,15 @@ const Frame = () => {
                     </div>
                 );
             })}
+        </div>
+        <div className={[classes.border, classes.borderRight].join(' ')}
+            style={{
+                width: sizing.frameWidth,
+                height: sizing.frameBorderHeight,
+                left: sizing.frameEdgeRightPosition,
+                bottom: sizing.frameEdgeLRPositionBottom - sizing.frameBorderHeight,
+                background: showBorders ? 'rgba(135, 206, 235, 1)' : 'none',  // skyblue
+            }}>
         </div>
     </>;
 };
