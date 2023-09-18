@@ -42,7 +42,7 @@ const Frame = () => {
                 width: sizing.frameWidth,
                 height: sizing.frameBorderHeight,
                 bottom: sizing.frameEdgeBottomPositionBottom + sizing.frameHeight,
-                background: showBorders ? 'rgba(135, 206, 235, 1)' : 'none',  // skyblue
+                background: showBorders && showFrame ? 'rgba(135, 206, 235, 1)' : 'none',  // skyblue
             }}>
         </div>
 
@@ -73,7 +73,7 @@ const Frame = () => {
                 height: sizing.frameBorderHeight,
                 right: sizing.frameEdgeLeftPosition,
                 bottom: sizing.frameEdgeLRPositionBottom - sizing.frameBorderHeight,
-                background: showBorders ? 'rgba(135, 206, 235, 1)' : 'none',  // skyblue
+                background: showBorders && showFrame ? 'rgba(135, 206, 235, 1)' : 'none',  // skyblue
             }}>
         </div>
 
@@ -104,7 +104,7 @@ const Frame = () => {
                 height: sizing.frameBorderHeight,
                 left: sizing.frameEdgeRightPosition,
                 bottom: sizing.frameEdgeLRPositionBottom - sizing.frameBorderHeight,
-                background: showBorders ? 'rgba(135, 206, 235, 1)' : 'none',  // skyblue
+                background: showBorders && showFrame ? 'rgba(135, 206, 235, 1)' : 'none',  // skyblue
             }}>
         </div>
     </>;
