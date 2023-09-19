@@ -1,0 +1,49 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+env_variables:
+  BUCKET_NAME: "triazzle-solver.appspot.com"
+
+skip_files:
+- ^(?!out)  # Skip any files not in the .out folder
+handlers:
+- url: /_next/static/chunks
+  static_dir: out/_next/static/chunks
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /_next/static/css
+  static_dir: out/_next/static/css
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /_next/static/media
+  static_dir: out/_next/static/media
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /favicon.png
+  static_files: out/favicon.png
+  upload: out/favicon.png
+  secure: always
+  redirect_http_response_code: 301
+
+
+- url: /favicon.ico
+  static_files: out/favicon.ico
+  upload: out/favicon.ico
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /(.+)
+  static_files: out/index.html
+  upload: out/index.html
+  secure: always
+  redirect_http_response_code: 301
+
+- url: /
+  static_files: out/index.html
+  upload: out/index.html
+  secure: always
+  redirect_http_response_code: 301
