@@ -1,6 +1,7 @@
 import { Component } from "react";
 
 import FramelessSolutionsContext from "./frameless-solutions-context";
+import storedFramelessSolutions from "./solutions-frameless.json";
 import { Edge, Piece, Puzzle, TrackingArray } from "@/types";
 
 interface Props {
@@ -40,13 +41,21 @@ class FramelessSolutionsProvider extends Component<Props, State> {
     generateSolutions(puzzle: Puzzle) {
         const windowIsUndefined = typeof window === 'undefined';
         if (!windowIsUndefined && localStorage.getItem('solutions')) {
-            console.log('USING stored solutions');
+            console.log('USING localStorage solutions');
             this.solutions = JSON.parse(localStorage.getItem('solutions')!);
             this.setState({
                 solutions: this.solutions,
                 solutionsCount: this.solutions.length
             });
             return this.solutions;
+        }
+        else if (storedFramelessSolutions && storedFramelessSolutions.length > 0) {
+            console.log('USING stored solutions');
+            this.setState({
+                solutions: storedFramelessSolutions,
+                solutionsCount: storedFramelessSolutions.length
+            });
+            return storedFramelessSolutions;
         }
 
 

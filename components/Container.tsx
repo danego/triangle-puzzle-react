@@ -34,7 +34,7 @@ const Container = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, [dispatch]);dispatch
+    }, [dispatch]);
 
     // Move these higher up to root:
     const solutionsCtx = useContext(SolutionsContext);

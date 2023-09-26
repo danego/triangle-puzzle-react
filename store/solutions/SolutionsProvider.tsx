@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import SolutionsContext from './solutions-context';
+import storedSolutions from './solutions.json';
 import { Edge, Piece, Puzzle, TrackingArray } from '@/types';
 
 const SolutionsProvider = (props: any) => {
@@ -32,11 +33,17 @@ const SolutionsProvider = (props: any) => {
 
         const windowIsUndefined = typeof window === 'undefined';
         if (!windowIsUndefined && localStorage.getItem('solutions-framed')) {
-            console.log('USING stored solutions - FRAMED');
+            console.log('USING localStorage solutions - FRAMED');
             solutions = JSON.parse(localStorage.getItem('solutions-framed')!);
             setAllSolutions(solutions);
             setAllSolutionsCount(solutions.length);
             return solutions;
+        }
+        else if (storedSolutions && storedSolutions.length > 0) {
+            console.log('USING stored solutions - FRAMED');
+            setAllSolutions(storedSolutions);
+            setAllSolutionsCount(storedSolutions.length);
+            return storedSolutions;
         }
 
         let row1PermCounter = 0;
