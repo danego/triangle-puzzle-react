@@ -1,8 +1,12 @@
-import { useAppSelector } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { useDrop } from 'react-dnd';
 
 import classes from './Spot.module.scss';
 import Triangle from './Triangle';
 import { GRAB_HANDLE_TOP_RATIO, GRAB_HANDLE_TOP_RATIO_ODD, TRIANGLE_CLASS_RIGHT_RATIO } from '../store/sizing';
+import { DragItemTypes } from '@/types';
+import { actions as piecesActions } from '../store/pieces';
+
 
 interface SpotProps {
     id: number;
@@ -10,6 +14,22 @@ interface SpotProps {
 };
 
 export default function Spot(props: SpotProps) {
+    const dispatch = useAppDispatch();
+    const [{isOver}, drop] = useDrop(() => ({
+        accept: DragItemTypes.PIECE,
+        drop: (data) => {
+            console.log(data);
+            console.log('dropped in a SPOT');
+            dispatch(piecesActions.dragEndedInSpot(props.id))
+        },
+        collect: (monitor) => ({
+            isOver: !!monitor.isOver()
+        })
+        }),
+        // [x , y]
+    );
+
+
     const piece = useAppSelector(state => state.pieces.board['spot' + props.id].piece);
     const showBorders = useAppSelector(state => state.controls).borders;
     const sizing = useAppSelector(state => state.sizing);
@@ -18,12 +38,14 @@ export default function Spot(props: SpotProps) {
 
     return (
         <div
+            ref={drop}
             className={`${classes['grab-handle']} ${props.odd && classes['odd']}`}
             style={{
                 width: sizing.grabHandleDiameter,
                 height: sizing.grabHandleDiameter,
                 top: props.odd ? (sizing.triangleSize * GRAB_HANDLE_TOP_RATIO_ODD) : (sizing.triangleSize * GRAB_HANDLE_TOP_RATIO),
                 margin: `0 ${sizing.triangleSize * sizing.grabHandleMarginRatio}px`,
+                background: isOver ? 'yellow' : 'transparent'
             }}>
 
             <div

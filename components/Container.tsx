@@ -2,14 +2,14 @@ import React, { useContext, useEffect } from "react";
 
 import classes from './Container.module.scss';
 import puzzleBirds from '../birds';
-import FramelessSolutionsContext from "@/store/solutions/frameless-solutions-context";
+import FramelessSolutionsContext from '../store/solutions/frameless-solutions-context';
 import Board from './Board';
 import Frame from './Frame';
 import { solutionsActions } from '../store/solutions';
 import { useAppDispatch } from '../store/hooks';
 import { SolutionTypes } from '../types';
 import SolutionsContext from '../store/solutions/solutions-context';
-import { changeSize, sizingActions } from "../store/sizing";
+import { changeSize, sizingActions } from '../store/sizing';
 
 const DEBOUNCE_TIME = 500;
 

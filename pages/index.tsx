@@ -1,7 +1,10 @@
 import Head from 'next/head'
 import { Provider } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import styles from '@/styles/Home.module.css'
+import classes from '@/styles/Home.module.scss'
+import Bank from '../components/Bank';
 import Container from '../components/Container';
 import Controls from '../components/Controls';
 import Header from '../components/Header';
@@ -18,16 +21,23 @@ export default function Home() {
         <link rel="icon" href="/favicon.png" />
       </Head>
 
-      <main className={styles.main}>
+      <main className={classes.main}>
         {/* Seems like this is a messy way to do have all these providers -
           could prob put them all in separate component */}
         <SolutionsProvider>
           <FramelessSolutionsProvider>
+            <DndProvider backend={HTML5Backend}>
 
-            <Header />
-            <Container />
-            <Controls />
+              <Header />
+              <div className={classes.horizontal}>
+                <div className={classes.vertical}>
+                  <Bank />
+                </div>
+                <Container />
+              </div>
+              <Controls />
 
+            </DndProvider>
           </FramelessSolutionsProvider>
         </SolutionsProvider>
       </main>

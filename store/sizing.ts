@@ -94,7 +94,8 @@ export const sizingActions = sizingSlice.actions;
 
 export const changeSize = () => {
     return (dispatch: Dispatch<any>) => {
-        const maximumTriangleSizeByWidth = window.innerWidth / 5;
+        // const maximumTriangleSizeByWidth = window.innerWidth / 5;
+        const maximumTriangleSizeByWidth = window.innerWidth / 8;
         const maximumTriangleSizeByHeight = window.innerHeight / HEIGHT_TO_TRIANGLE_RATIO / 5;
 
         let maximumTriangleSize = maximumTriangleSizeByWidth < maximumTriangleSizeByHeight ? maximumTriangleSizeByWidth : maximumTriangleSizeByHeight;

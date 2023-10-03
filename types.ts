@@ -40,3 +40,8 @@ export enum SolutionTypes {
 
 // Non-Solving Process Types
 export type PieceEdgeLocation = 'bottom' | 'left' | 'right' | 'frame';
+
+// Drag & Drop
+export const DragItemTypes = {
+    PIECE: 'piece'
+};
