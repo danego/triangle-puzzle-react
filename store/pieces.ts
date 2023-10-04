@@ -19,7 +19,7 @@ interface PiecesState {
     } [];
     isDragging: {
         piece: Piece,
-        rotation: number,
+        rotation: number | null,
         spot: number,
         bank?: boolean
     } | null;
@@ -75,10 +75,9 @@ const pieces = createSlice({
     name: 'pieces',
     initialState,
     reducers: {
-        rotate(state, action: PayloadAction<{ id: number, bank?: boolean }>) {
-            let newRotation;
+        rotatePieceInBoard(state, action: PayloadAction<{ id: number }>) {
             const spotId = 'spot' + action.payload.id;
-            // let newRotation;
+            let newRotation;
             if (!state.board[spotId].rotation) {
                 newRotation = 3;
             }
@@ -89,6 +88,21 @@ const pieces = createSlice({
                 newRotation = 3;
             }
             state.board[spotId]!.rotation = newRotation;
+        },
+        rotatePieceInBank(state, action: PayloadAction<{ id: number }>) {
+            let newRotation;
+            const bankIndex = action.payload.id;
+            if (!state.bank[bankIndex].rotation) {
+                newRotation = 3;
+            }
+            else {
+                newRotation = state.bank[bankIndex]!.rotation! - 1;
+            }
+            if (newRotation < 1) {
+                newRotation = 3;
+            }
+            state.bank[bankIndex]!.rotation = newRotation;
+            return;
         },
         loadSolution(state, action: PayloadAction<TrackingArray>) {
             const trackingArray = action.payload;
@@ -116,13 +130,13 @@ const pieces = createSlice({
 
         // --------------------------------
         // DRAG & DROP
-        // source and target
-
         dragEndedInBank(state) {
             state.bank.push({
                 piece: state.isDragging!.piece,
                 rotation: 1
             });
+
+            // reset source spot
             state.board['spot' + state.isDragging?.spot] = initialSpotState;
 
             // reset isDragging
@@ -131,14 +145,13 @@ const pieces = createSlice({
         dragEndedInSpot(state, action: PayloadAction<number>) {
             const spotNumber = action.payload;
 
-            // deal with spot already filled - eventually
             // check if spot is free for drop
             if (state.board['spot' + spotNumber].piece) {
-                // reset isDragging
-                state.board['spot' + state.isDragging!.spot] = {
-                    piece: state.isDragging!.piece,
-                    rotation: 1
-                };
+                // reset source spot
+                // state.board['spot' + state.isDragging!.spot] = {
+                //     piece: state.isDragging!.piece,
+                //     rotation: 1
+                // };
                 state.isDragging = null;
                 return;
             }
@@ -156,21 +169,7 @@ const pieces = createSlice({
             else {
                 state.board['spot' + state.isDragging?.spot] = initialSpotState;
             }
-            // reset isDragging
             state.isDragging = null;
-        },
-        // event comes from drag element
-        dragEnded(state) {
-            if (state.isDragging) {
-                console.log('drag enedeed in STORE');
-                // reset isDragging
-                state.board['spot' + state.isDragging!.spot] = {
-                    piece: state.isDragging!.piece,
-                    rotation: 1
-                };
-                state.isDragging = null;
-                return;
-            }
         },
 
         // started from spot/bank
@@ -180,9 +179,8 @@ const pieces = createSlice({
             // ^ store spot location in state
             // then restore if cancelled
 
-
-            console.log(action.payload.piece);
-            console.log(action.payload.spot);
+            // console.log(action.payload.piece);
+            // console.log(action.payload.spot);
 
             // remove piece from source spot
             // state.board['spot' + spotNumber] = initialSpotState;

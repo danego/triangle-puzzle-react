@@ -2,10 +2,11 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { useDrop } from 'react-dnd';
 
 import classes from './Spot.module.scss';
-import Triangle from './Triangle';
 import { GRAB_HANDLE_TOP_RATIO, GRAB_HANDLE_TOP_RATIO_ODD, TRIANGLE_CLASS_RIGHT_RATIO } from '../store/sizing';
 import { DragItemTypes } from '@/types';
 import { actions as piecesActions } from '../store/pieces';
+import TriangleLayerPieceBoard from './triangle-layers/TriangleLayerPieceBoard';
+import TriangleLayerPreviewBoard from './triangle-layers/TriangleLayerPreviewBoard';
 
 
 interface SpotProps {
@@ -14,11 +15,15 @@ interface SpotProps {
 };
 
 export default function Spot(props: SpotProps) {
+    const isDragging = useAppSelector(state => state.pieces.isDragging);
+    const piece = useAppSelector(state => state.pieces.board['spot' + props.id].piece);
+    const showBorders = useAppSelector(state => state.controls).borders;
+    const sizing = useAppSelector(state => state.sizing);
+
     const dispatch = useAppDispatch();
     const [{isOver}, drop] = useDrop(() => ({
         accept: DragItemTypes.PIECE,
         drop: (data) => {
-            console.log(data);
             console.log('dropped in a SPOT');
             dispatch(piecesActions.dragEndedInSpot(props.id))
         },
@@ -28,11 +33,6 @@ export default function Spot(props: SpotProps) {
         }),
         // [x , y]
     );
-
-
-    const piece = useAppSelector(state => state.pieces.board['spot' + props.id].piece);
-    const showBorders = useAppSelector(state => state.controls).borders;
-    const sizing = useAppSelector(state => state.sizing);
 
     let rotation = props.odd ? 180 : 0;
 
@@ -45,7 +45,6 @@ export default function Spot(props: SpotProps) {
                 height: sizing.grabHandleDiameter,
                 top: props.odd ? (sizing.triangleSize * GRAB_HANDLE_TOP_RATIO_ODD) : (sizing.triangleSize * GRAB_HANDLE_TOP_RATIO),
                 margin: `0 ${sizing.triangleSize * sizing.grabHandleMarginRatio}px`,
-                background: isOver ? 'yellow' : 'transparent'
             }}>
 
             <div
@@ -87,7 +86,11 @@ export default function Spot(props: SpotProps) {
                 </div>
             </div>
 
-            {piece && <Triangle piece={piece} spotId={props.id} odd={props.odd} />}
+            {piece && <TriangleLayerPieceBoard piece={piece} spotId={props.id} odd={props.odd} />}
+
+            {isOver && isDragging && (isDragging.spot !== props.id) &&
+                <TriangleLayerPreviewBoard piece={isDragging.piece} spotId={props.id} odd={props.odd} />
+            }
         </div>
     );
 }

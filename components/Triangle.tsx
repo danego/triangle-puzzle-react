@@ -1,72 +1,55 @@
 import { DragPreviewImage, useDrag } from 'react-dnd';
 
 import classes from './Triangle.module.scss';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { actions as piecesActions } from '../store/pieces';
+import { useAppSelector } from '../store/hooks';
 import { TRIANGLE_CLASS_RIGHT_RATIO } from '../store/sizing';
 import { Piece, DragItemTypes } from '../types';
 import PieceEdge from './PieceEdge';
-import { useEffect } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
 
 interface TriangleProps {
     piece: Piece;
     spotId: number;
     odd?: boolean;
+    rotation: number | null;
+    dragStarted: Function;
+    rotateHandler: Function;
+    topPosition?: number;
 };
 
 export default function Triangle(props: TriangleProps) {
-    const rotation = useAppSelector(state => state.pieces.board['spot' + props.spotId]).rotation;
-
     const sizing = useAppSelector(state => state.sizing);
     const showIds = useAppSelector(state => state.controls.pieceIds);
-    const dispatch = useAppDispatch();
 
-    const [{isDragging, isDropped}, drag, preview] = useDrag(() => ({
+    const [{isDragging}, drag, preview] = useDrag(() => ({
         type: DragItemTypes.PIECE,
         collect: monitor => ({
             isDragging: !!monitor.isDragging(),
-            isDropped: !!monitor.didDrop() // endDrag ? where
         })
     }));
 
+    const [visibility, setVisibility] = useState(true);
+
     useEffect(() => {
-        // pass in spot # too for now
-        // prob eventually want to keep track of piece, spot, and rotation in store ...
         if (isDragging) {
-            dispatch(piecesActions.dragStarted({
-                piece: props.piece,
-                rotation: rotation,
-                spot: props.spotId,
-                // bank: props.bank
-            }));
+            console.log('drag STARTED from triangle: ', isDragging);
+            // make triangle hidden
+            // have to unhide if isOver  && change logic in store.pieces
+            setVisibility(false);
+
+            props.dragStarted();
         }
         else {
-            console.log('DROpped from triangle: ', isDropped);
-            // dispatch(piecesActions.dragEnded());
+            // console.log('drag ENDED from triangle: ', isDragging, isDropped, props.spotId);
+            if (!visibility) setVisibility(true);
         }
-
-
-        // add call for dragEnded - not in bank or spot (currently drops the piece)
-
     }, [isDragging]);
 
-    useEffect(() => {
-        // console.log('DROpped from triangle: ', isDropped);
-        dispatch(piecesActions.dragEnded());  // does not run unless drop target hit
-    }, [isDropped]);
-
-
     let rotationDegrees = props.odd ? 180 : 0;
-    if (rotation) {
-        if (rotation === 2) rotationDegrees += 240;
-        else if (rotation === 3) rotationDegrees += 120;
+    if (props.rotation) {
+        if (props.rotation === 2) rotationDegrees += 240;
+        else if (props.rotation === 3) rotationDegrees += 120;
     }
-
-    const rotateHandler = () => {
-        dispatch(piecesActions.rotate({
-            id: props.spotId,
-        }));
-    };
 
 
     return (
@@ -74,8 +57,13 @@ export default function Triangle(props: TriangleProps) {
             ref={drag}
             draggable='true'
             className={`${classes['grab-handle']} ${props.odd && classes['odd']}`}
-            style={{ width: sizing.grabHandleDiameter, height: sizing.grabHandleDiameter }}
-            onClick={rotateHandler}>
+            style={{
+                width: sizing.grabHandleDiameter,
+                height: sizing.grabHandleDiameter,
+                visibility: visibility ? 'visible' : 'hidden',
+                top: props.topPosition
+            }}
+            onClick={props.rotateHandler as MouseEventHandler}>
 
             { showIds && <span className={classes['piece-id']}>{props.piece.id}</span>}
 
@@ -119,19 +107,10 @@ export default function Triangle(props: TriangleProps) {
                         edgeSize={sizing.edgeSize}
                     />
                 </div>
-
-
-                {/* Color Lines Border */}
-                {/*
-                <div className={`${classes.border} ${props.odd ? classes['border-odd'] : ''}`}></div>
-                <div className={`${classes.border} ${props.odd ? classes['border-odd'] : ''}`}></div>
-                <div className={`${classes.border} ${props.odd ? classes['border-odd'] : ''}`}></div>
-                */}
             </div>
 
-            {/* <DragPreviewImage connect={preview} >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="hotpink" width="50px" height="50px"><path d="M0 0h24v24H0z" fill="none"/><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>
-            </DragPreviewImage> */}
+            <DragPreviewImage connect={preview} src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fstatic-00.iconduck.com%2Fassets.00%2Fextension-icon-2013x2048-mq8rfw86.png&tbnid=47AeQIEoZysa8M&vet=12ahUKEwib_fCC3duBAxWQKdAFHfcIC78QMygMegQIARBq..i&imgrefurl=https%3A%2F%2Ficonduck.com%2Ficons%2F15083%2Fextension&docid=DIj76r7_DtVGSM&w=2013&h=2048&q=puzzle%20extension%20icon&ved=2ahUKEwib_fCC3duBAxWQKdAFHfcIC78QMygMegQIARBq" />
+            {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="hotpink" width="50px" height="50px"><path d="M0 0h24v24H0z" fill="none"/><path d=""/></svg> */}
         </div>
     );
 }
