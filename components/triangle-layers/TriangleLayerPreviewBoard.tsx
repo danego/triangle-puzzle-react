@@ -1,36 +1,34 @@
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { actions as piecesActions } from '../../store/pieces';
+import { useAppSelector } from '../../store/hooks';
 import { Piece } from '../../types';
 import Triangle from '../Triangle';
 
 interface TriangleLayerPreviewBankProps {
-    piece: Piece;
+    spotPiece: Piece | null;
     spotId: number;
     odd?: boolean;
 }
 
 const TriangleLayerPreviewBank = (props: TriangleLayerPreviewBankProps) => {
-    const rotation = useAppSelector(state => state.pieces.isDragging?.rotation);
+    const isDragging = useAppSelector(state => state.pieces.isDragging);
 
-    const dispatch = useAppDispatch();
-    const dragStartedHandler = () => {
-        dispatch(piecesActions.dragStarted({
-            piece: props.piece,
-            rotation: rotation,
-            spot: props.spotId,
-        }));
-    };
+    const pieceInSpotAlready = props.spotPiece;
+    const dragStartedFromCurrentSpot = props.spotId === isDragging?.spot;
+    const dragStartedFromBank = isDragging?.bank;
 
-    return (
-        <Triangle
-            rotation={rotation || null}
-            dragStarted={dragStartedHandler}
-            rotateHandler={() => {}}
-            piece={props.piece}
-            spotId={props.spotId}
-            odd={props.odd}
-            />
-    );
+    return <>
+        {
+            isDragging  &&
+            (!pieceInSpotAlready || (dragStartedFromCurrentSpot && !dragStartedFromBank)) &&
+                <Triangle
+                    rotation={isDragging.rotation}
+                    dragStarted={() => {}}
+                    rotateHandler={() => {}}
+                    piece={isDragging.piece}
+                    spotId={props.spotId}
+                    odd={props.odd}
+                    />
+        }
+    </>;
 };
 
 export default TriangleLayerPreviewBank;

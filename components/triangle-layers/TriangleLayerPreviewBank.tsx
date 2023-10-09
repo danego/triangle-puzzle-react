@@ -1,37 +1,41 @@
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { actions as piecesActions } from '../../store/pieces';
-import { Piece } from '../../types';
+import classes from './TriangleLayerPreviewBank.module.scss';
+import { useAppSelector } from '../../store/hooks';
 import Triangle from '../Triangle';
 
 interface TriangleLayerPreviewBankProps {
-    piece: Piece;
     bankIndex: number;
-    topPosition: number;
 }
 
 const TriangleLayerPreviewBank = (props: TriangleLayerPreviewBankProps) => {
-    const rotation = useAppSelector(state => state.pieces.isDragging?.rotation);
+    const sizing = useAppSelector(state => state.sizing);
+    const isDragging = useAppSelector(state => state.pieces.isDragging);
 
-    const dispatch = useAppDispatch();
-    const dragStartedHandler = () => {
-        dispatch(piecesActions.dragStarted({
-            piece: props.piece,
-            rotation: rotation,
-            spot: props.bankIndex,
-            bank: true
-        }));
-    };
+    const topPosition = sizing.triangleHeight / 2 - sizing.grabHandleDiameter / 2;
+    const dragStartedFromBank = isDragging?.bank;
 
-    return (
-        <Triangle
-            rotation={rotation || null}
-            dragStarted={dragStartedHandler}
-            rotateHandler={() => {}}
-            piece={props.piece}
-            spotId={props.bankIndex}
-            topPosition={props.topPosition}
-            />
-    );
+
+    return <>
+        {
+            isDragging &&
+            !dragStartedFromBank &&
+                <div
+                    className={classes.triangleContainer}
+                    style={{
+                        width: sizing.triangleSize,
+                        height: sizing.triangleHeight,
+                    }}>
+                        <Triangle
+                            rotation={isDragging.rotation}
+                            dragStarted={() => {}}
+                            rotateHandler={() => {}}
+                            piece={isDragging.piece}
+                            spotId={props.bankIndex}
+                            topPosition={topPosition}
+                            />
+                </div>
+
+        }
+    </>;
 };
 
 export default TriangleLayerPreviewBank;

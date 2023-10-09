@@ -15,7 +15,6 @@ interface SpotProps {
 };
 
 export default function Spot(props: SpotProps) {
-    const isDragging = useAppSelector(state => state.pieces.isDragging);
     const piece = useAppSelector(state => state.pieces.board['spot' + props.id].piece);
     const showBorders = useAppSelector(state => state.controls).borders;
     const sizing = useAppSelector(state => state.sizing);
@@ -35,6 +34,7 @@ export default function Spot(props: SpotProps) {
     );
 
     let rotation = props.odd ? 180 : 0;
+
 
     return (
         <div
@@ -88,9 +88,8 @@ export default function Spot(props: SpotProps) {
 
             {piece && <TriangleLayerPieceBoard piece={piece} spotId={props.id} odd={props.odd} />}
 
-            {isOver && isDragging && (isDragging.spot !== props.id) &&
-                <TriangleLayerPreviewBoard piece={isDragging.piece} spotId={props.id} odd={props.odd} />
-            }
+            {/* Piece Preview */}
+            {isOver && <TriangleLayerPreviewBoard spotPiece={piece} spotId={props.id} odd={props.odd} />}
         </div>
     );
 }

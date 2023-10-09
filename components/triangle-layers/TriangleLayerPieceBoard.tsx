@@ -27,6 +27,7 @@ const TriangleLayerPreviewBank = (props: TriangleLayerPreviewBankProps) => {
         }));
     };
 
+
     return (
         <Triangle
             rotation={rotation || null}

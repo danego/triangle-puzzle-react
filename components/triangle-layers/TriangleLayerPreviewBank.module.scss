@@ -1,0 +1,15 @@
+.triangleContainer {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:last-child {
+        margin-right: auto;
+    }
+
+    // Triangle grab handle
+    > div {
+        position: relative;
+    }
+}

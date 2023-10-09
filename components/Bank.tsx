@@ -10,7 +10,6 @@ import TriangleLayerPieceBank from './triangle-layers/TriangleLayerPieceBank';
 
 const Bank = () => {
     const sizing = useAppSelector(state => state.sizing);
-    const isDragging = useAppSelector(state => state.pieces.isDragging);
     const bankPieces = useAppSelector(state => state.pieces.bank);
 
     const dispatch = useAppDispatch();
@@ -42,30 +41,22 @@ const Bank = () => {
                 width: sizing.triangleSize,  // * 2 optionally
             }}>
 
-            {/* Piece Preview */}
-            {isOver && isDragging &&
-                <div
-                    className={classes.triangleContainer}
-                    style={{
-                        width: sizing.triangleSize,
-                        height: sizing.triangleHeight,
-                    }}>
-                        <TriangleLayerPreviewBank piece={isDragging.piece} bankIndex={0} topPosition={topPosition} />
-                </div>
-            }
-
-            {bankPieces.map(({piece}, i) => (
-                <>
+            {bankPieces.map(({piece}, i) => {
+                return (
                     <div
+                        key={piece.id}
                         className={classes.triangleContainer}
                         style={{
                             width: sizing.triangleSize,
                             height: sizing.triangleHeight,
                         }}>
-                        <TriangleLayerPieceBank key={piece.id} piece={piece} bankIndex={i} topPosition={topPosition} />
+                        <TriangleLayerPieceBank piece={piece} bankIndex={i} topPosition={topPosition} />
                     </div>
-                </>
-            ))}
+            )})}
+
+
+            {/* Piece Preview */}
+            {isOver && <TriangleLayerPreviewBank bankIndex={0} />}
         </div>
     </>;
 };
