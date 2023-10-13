@@ -2,13 +2,13 @@ import { useAppSelector } from '../../store/hooks';
 import { Piece } from '../../types';
 import Triangle from '../Triangle';
 
-interface TriangleLayerPreviewBankProps {
+interface TriangleLayerPreviewBoardProps {
     spotPiece: Piece | null;
     spotId: number;
     odd?: boolean;
 }
 
-const TriangleLayerPreviewBank = (props: TriangleLayerPreviewBankProps) => {
+const TriangleLayerPreviewBoard = (props: TriangleLayerPreviewBoardProps) => {
     const isDragging = useAppSelector(state => state.pieces.isDragging);
 
     const pieceInSpotAlready = props.spotPiece;
@@ -31,4 +31,4 @@ const TriangleLayerPreviewBank = (props: TriangleLayerPreviewBankProps) => {
     </>;
 };
 
-export default TriangleLayerPreviewBank;
+export default TriangleLayerPreviewBoard;

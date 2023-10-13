@@ -6,6 +6,7 @@ import { TRIANGLE_CLASS_RIGHT_RATIO } from '../store/sizing';
 import { Piece, DragItemTypes } from '../types';
 import PieceEdge from './PieceEdge';
 import { MouseEventHandler, useEffect, useState } from 'react';
+import dragPreviewImage from '../styles/piece-preview.png';
 
 interface TriangleProps {
     piece: Piece;
@@ -51,8 +52,13 @@ export default function Triangle(props: TriangleProps) {
         else if (props.rotation === 3) rotationDegrees += 120;
     }
 
+    // const dragPreviewImageSource = './public/piece-preview.png'; // public/piece-preview.png
+    // console.log(props.spotId, dragPreviewImage.src);
+    // console.log(props.spotId, 'triangle');
+    const dragPreviewImageSource = dragPreviewImage.src;
 
-    return (
+
+    return <>
         <div
             ref={drag}
             draggable='true'
@@ -60,7 +66,7 @@ export default function Triangle(props: TriangleProps) {
             style={{
                 width: sizing.grabHandleDiameter,
                 height: sizing.grabHandleDiameter,
-                visibility: visibility ? 'visible' : 'hidden',
+                display: visibility ? 'block' : 'none',
                 top: props.topPosition
             }}
             onClick={props.rotateHandler as MouseEventHandler}>
@@ -108,9 +114,11 @@ export default function Triangle(props: TriangleProps) {
                     />
                 </div>
             </div>
-
-            <DragPreviewImage connect={preview} src="https://www.google.com/imgres?imgurl=https%3A%2F%2Fstatic-00.iconduck.com%2Fassets.00%2Fextension-icon-2013x2048-mq8rfw86.png&tbnid=47AeQIEoZysa8M&vet=12ahUKEwib_fCC3duBAxWQKdAFHfcIC78QMygMegQIARBq..i&imgrefurl=https%3A%2F%2Ficonduck.com%2Ficons%2F15083%2Fextension&docid=DIj76r7_DtVGSM&w=2013&h=2048&q=puzzle%20extension%20icon&ved=2ahUKEwib_fCC3duBAxWQKdAFHfcIC78QMygMegQIARBq" />
-            {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="hotpink" width="50px" height="50px"><path d="M0 0h24v24H0z" fill="none"/><path d=""/></svg> */}
         </div>
-    );
+
+        <DragPreviewImage connect={preview} src={dragPreviewImageSource} />
+        {/* <div ref={preview} style={{zIndex: isDragging ? '1' : '-1' }}>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="hotpink" width="50px" height="50px"><path d="M0 0h24v24H0z" fill="none"/><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>
+        </div> */}
+    </>;
 }

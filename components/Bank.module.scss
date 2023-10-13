@@ -1,8 +1,8 @@
 .bank {
     flex-grow: 1;
-    max-height: calc(586px - 40px - 2px);
+    // max-height: calc(586px - 40px - 2px); // content box -padding -border
     overflow: scroll;
-    box-sizing: content-box !important;
+    box-sizing: content-box !important;  // for simplified dynamic width calc
     padding: 20px;
     margin: 0 10px;
     background: whitesmoke;

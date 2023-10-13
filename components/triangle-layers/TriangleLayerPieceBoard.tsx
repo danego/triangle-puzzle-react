@@ -3,13 +3,13 @@ import { actions as piecesActions } from '../../store/pieces';
 import { Piece } from '../../types';
 import Triangle from '../Triangle';
 
-interface TriangleLayerPreviewBankProps {
+interface TriangleLayerPieceBoardProps {
     piece: Piece;
     spotId: number;
     odd?: boolean;
 }
 
-const TriangleLayerPreviewBank = (props: TriangleLayerPreviewBankProps) => {
+const TriangleLayerPieceBoard = (props: TriangleLayerPieceBoardProps) => {
     const rotation = useAppSelector(state => state.pieces.board['spot' + props.spotId]).rotation;
 
     const rotateHandler = () => {
@@ -27,6 +27,7 @@ const TriangleLayerPreviewBank = (props: TriangleLayerPreviewBankProps) => {
         }));
     };
 
+    console.log('Layer Piece Bank');
 
     return (
         <Triangle
@@ -40,4 +41,4 @@ const TriangleLayerPreviewBank = (props: TriangleLayerPreviewBankProps) => {
     );
 };
 
-export default TriangleLayerPreviewBank;
+export default TriangleLayerPieceBoard;

@@ -1,0 +1,37 @@
+Board
+- dragStarted (called from Triangle Layers)
+    - hide source spot Triangle - in Triangle component
+    - abandoned - Triangle component should restore visibility
+
+- previews
+    - show dragpreview image url
+    - over source spot
+    - over empty spot
+    - over occupied spot
+
+- drag ended
+    - remove (not just vis) from source spot
+    - in source spot
+    - in empty spot
+    - in occupied spot
+    -
+    - in bank
+
+
+----------------------------
+
+Bank
+- dragStarted (called from Triangle Layers)
+    - hide source spot Triangle - in Triangle component
+    - abandoned - Triangle component should restore visibility
+
+- previews
+    - show dragpreview image url
+    - over bank
+
+- drag ended
+    - remove (not just vis) from bank (splice?)
+    - in empty spot
+    - in occupied spot
+    -
+    - in bank

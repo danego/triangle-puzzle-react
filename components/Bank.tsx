@@ -39,6 +39,7 @@ const Bank = () => {
             className={classes.bank + ' panel'}
             style={{
                 width: sizing.triangleSize,  // * 2 optionally
+                maxHeight: sizing.triangleHeight * 4 + 11
             }}>
 
             {bankPieces.map(({piece}, i) => {
