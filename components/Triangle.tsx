@@ -5,7 +5,7 @@ import { useAppSelector } from '../store/hooks';
 import { TRIANGLE_CLASS_RIGHT_RATIO } from '../store/sizing';
 import { Piece, DragItemTypes } from '../types';
 import PieceEdge from './PieceEdge';
-import { MouseEventHandler, useEffect, useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import dragPreviewImage from '../styles/piece-preview.png';
 
 interface TriangleProps {
@@ -31,20 +31,17 @@ export default function Triangle(props: TriangleProps) {
 
     const [visibility, setVisibility] = useState(true);
 
-    useEffect(() => {
-        if (isDragging) {
-            console.log('drag STARTED from triangle: ', isDragging);
-            // make triangle hidden
-            // have to unhide if isOver  && change logic in store.pieces
-            setVisibility(false);
-
-            props.dragStarted();
-        }
-        else {
-            // console.log('drag ENDED from triangle: ', isDragging, isDropped, props.spotId);
-            if (!visibility) setVisibility(true);
-        }
-    }, [isDragging]);
+   // Hide source piece during drag
+    if (isDragging && visibility) {
+        console.log('drag STARTED from triangle: ', isDragging);
+        setVisibility(false);
+        props.dragStarted();
+    }
+    // Show source piece after drag
+    else if (!isDragging && !visibility) {
+        console.log('drag ENDED from triangle: ', props.spotId);
+        setVisibility(true);
+    }
 
     let rotationDegrees = props.odd ? 180 : 0;
     if (props.rotation) {

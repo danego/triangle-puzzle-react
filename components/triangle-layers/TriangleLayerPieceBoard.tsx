@@ -27,7 +27,6 @@ const TriangleLayerPieceBoard = (props: TriangleLayerPieceBoardProps) => {
         }));
     };
 
-    console.log('Layer Piece Bank');
 
     return (
         <Triangle
